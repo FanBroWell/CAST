@@ -17,8 +17,7 @@ with `V_0 = $1000`, and the accounts never interact.
 3. **No FX assumption is required.** Global30 spans currencies, but since no cross-currency transfer ever occurs, the mean of 30 normalised account curves is well defined without an exchange-rate model.
 
 
-
-## A.3 The constraint stack
+## A.2 The constraint stack
 
 Three constraints bind a position, at three levels:
 
@@ -29,18 +28,17 @@ Three constraints bind a position, at three levels:
 | Margin floor | account | liquidate and stop trading if `V_k < 0.2 · V_0` | accounting loop |
 
 
-## A.4 What makes the comparison fair
+## A.3 What makes the comparison fair
 
 Both arms run under an identical capital allocation and an identical constraint
-stack — by construction, not by convention:
+stack by construction:
 
 | | Shared? | How |
 | --- | --- | --- |
 | Starting capital | ✓ | `V_0 = $1000` × 30 accounts |
-| Universe and trading days | ✓ | same panel, same `test_start_idx` |
-| Execution timing | ✓ | same accounting loop (Appendix A) |
+| Universe and trading days | ✓ | same panel |
+| Execution timing | ✓ | same accounting loop|
 | Per-trade cap, clip, margin floor | ✓ | same code path, same constants |
 | `σ_v`, `σ_w` | ✓ | calibrated once, then handed to both arms |
 | `σ_l` multiplier | ✓ | same MPC class |
 | `λ` grid and selection protocol | ✓ | same protocol on both arms |
-| The filter | ✗ **by design** | this is the treatment |
