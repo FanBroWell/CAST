@@ -1,0 +1,40 @@
+{
+  "description": "Global30 — engineered cross-currency / cross-exchange / cross-mode basket, 2005-2025.",
+  "method": "Design = 5 currency zones (USD/EUR/JPY/GBP/HKD-CNY) × 3 growth modes (non-growth, slow, explosive) × 2 sector-diverse stocks per cell = 30.",
+  "tickers": [
+    "F",
+    "KO",
+    "JPM",
+    "WMT",
+    "NVDA",
+    "AAPL",
+    "VOW3.DE",
+    "BMW.DE",
+    "SAP.DE",
+    "SIE.DE",
+    "ASML.AS",
+    "NOVO-B.CO",
+    "9684.T",
+    "7733.T",
+    "7203.T",
+    "6758.T",
+    "6857.T",
+    "8035.T",
+    "LLOY.L",
+    "BARC.L",
+    "ULVR.L",
+    "RIO.L",
+    "AZN.L",
+    "SHEL.L",
+    "0001.HK",
+    "0939.HK",
+    "0941.HK",
+    "2318.HK",
+    "0700.HK",
+    "600519.SS"
+  ],
+  "shape": [
+    5291,
+    30
+  ]
+}

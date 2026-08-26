@@ -1,0 +1,40 @@
+{
+  "description": "CSI300 weak-signal basket maximizing calibration-period mean pairwise return correlation.",
+  "method": "1) Filter universe to weak signal (full Sharpe<0.40, Total<10x). 2) Compute pairwise ρ on 2005-2010 calibration period only. 3) Take top-30 by average calibration ρ.",
+  "tickers": [
+    "600006.SS",
+    "000060.SZ",
+    "600266.SS",
+    "600188.SS",
+    "600019.SS",
+    "600831.SS",
+    "600597.SS",
+    "600572.SS",
+    "600050.SS",
+    "600754.SS",
+    "600016.SS",
+    "600085.SS",
+    "000166.SZ",
+    "600059.SS",
+    "600518.SS",
+    "600015.SS",
+    "600739.SS",
+    "000002.SZ",
+    "600362.SS",
+    "601600.SS",
+    "600886.SS",
+    "600028.SS",
+    "600795.SS",
+    "000877.SZ",
+    "000789.SZ",
+    "000983.SZ",
+    "600061.SS",
+    "600637.SS",
+    "600688.SS",
+    "600009.SS"
+  ],
+  "shape": [
+    4955,
+    30
+  ]
+}

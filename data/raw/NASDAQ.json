@@ -1,0 +1,40 @@
+{
+  "description": "NASDAQ sector-mixed weak-signal basket — 30 stocks spanning banks, REITs, mature tech, biotech, consumer, and industrials.",
+  "method": "6 sectors × 3-8 weak-signal stocks each = 30. All have full Sharpe < 0.40, continuous 2005-2025 coverage.",
+  "tickers": [
+    "FITB",
+    "ZION",
+    "HBAN",
+    "NTRS",
+    "CINF",
+    "CBSH",
+    "WABC",
+    "WSFS",
+    "HST",
+    "REG",
+    "DRH",
+    "INTC",
+    "CSCO",
+    "MU",
+    "MCHP",
+    "MRVL",
+    "AKAM",
+    "BIIB",
+    "AMGN",
+    "GILD",
+    "INCY",
+    "ICLR",
+    "DLTR",
+    "EXPE",
+    "SBUX",
+    "EBAY",
+    "MAR",
+    "PCAR",
+    "TROW",
+    "FAST"
+  ],
+  "shape": [
+    5114,
+    30
+  ]
+}
