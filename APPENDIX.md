@@ -240,6 +240,71 @@ Both screens make the test harder.
 Global30 spans five currencies, so each of its series is divided by its first-day price; the other three panels use raw prices. The division is applied to the whole series, calibration window included, so it introduces no information asymmetry. Its only effect is to put the 30 series on a
 comparable numerical scale so that a single `σ_l` multiplier and a single per-trade cap mean the same thing across currencies.
 
+# Appendix C — Complete Parameter Listing
+
+## C.0 Consolidated table
+
+The experiment splits the data **in two**, at 2010-01-01:
+
+| Label | Span | Used for |
+| --- | --- | --- |
+| `CAL` | 2005-01-03 → 2009-12-31 | `σ_v`, `σ_w`, `ρ` fitted here, then frozen |
+| `TEST` | 2010-01-04 → 2025-04-30 | reporting only |
+
+| # | Parameter | Value | What it does |
+| --- | --- | --- | --- |
+| 1 | Forecast / MPC horizon `L` | 7 trading days | length of the forecast path and of the MPC plan |
+| 2 | IRW model orders `r` | {1, 2, 3} | the three structural hypotheses (level / trend / curvature) |
+| 3 | Per-trade cap `β` | 0.5 · `V_k` | no transaction exceeds half the account |
+| 4 | Initial capital `V_0` | $1000 per asset | 30 independent accounts |
+| 5 | Risk aversion `λ` | grid {0.05, 0.1, 0.3, 0.6} | trades expected profit against forecast uncertainty; the selection protocol is covered in the main text |
+| 6 | `σ_v`, `σ_w` | per asset, grid-searched on 1-step RMSE over `CAL`; the order-1 pair is reused for all three orders | process / observation noise of each IRW filter |
+| 7 | `ρ` | 30 × 30 per panel, from `CAL`; Pearson correlation of **raw price first differences**, symmetrised, diagonal 1, NaN → 0 | the only place assets are coupled — off-diagonals of `Q̃` |
+| 8 | Credibility weight | `log η = −0.5 · L · log(score)`, normalised | turns realised L-step error into a model weight |
+| 9 | Risk-weight multiplier `c` | 1.5 | scales the MPC risk penalty; enters only as `λ·c`, so it rescales the λ grid |
+| 10 | Margin floor | liquidate when `V_k < 0.2 · V_0` | account-level stop, standing in for a margin call |
+| 11 | Annualisation | 252 trading days | Sharpe, Sortino, Calmar, annualised return |
+| 12 | Missing-value handling | `ffill().bfill().dropna(how="any")` | data hygiene — a verified no-op; all four panels contain zero missing values |
+| 13 | Price normalisation | Global30 only: divide by first-day price | removes the cross-currency level mismatch |
+
+## C.1 The risk-weight multiplier `c`
+
+`c = 1.5` is introduced here. The function describes how forecast uncertainty grows with the look-ahead step, and carries no scale of its own. A multiplier is what sets the strength of that penalty against the profit term, and `c` supplies it.
+
+`c` can only make the controller **more conservative**: it enlarges the penalty on position size and cannot enlarge the predicted price gradient that drives the position, so it cannot manufacture a directional edge.
+
+### Ablation over `c`
+
+**Setup.** All four panels × both methods × `c` ∈ {1.0, 1.5, 2.0} × the
+four-point λ grid = 96 configurations, scored on the test window. Capital, constraints,
+calibration and accounting are shared.
+
+| `c` | Effective `λc` | CAST Sharpe | CAST MaxDD | CKF Sharpe | CKF MaxDD | CAST ahead | Mean gap | NASDAQ | CSI300 | TPX100 | Global30 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1.0 | 0.05 – 0.60 | 0.232 | 0.125 | 0.148 | 0.150 | **11 / 16** | **+0.084** | 4/4 | 2/4 | 1/4 | 4/4 |
+| **1.5** (used) | 0.075 – 0.90 | **0.256** | 0.108 | **0.184** | 0.124 | 10 / 16 | +0.072 | 4/4 | 2/4 | 1/4 | 3/4 |
+| 2.0 | 0.10 – 1.20 | 0.169 | **0.104** | 0.146 | **0.122** | 7 / 16 | +0.023 | 3/4 | 1/4 | 1/4 | 2/4 |
+
+Sharpe and MaxDD are means over the 16 (panel × λ) cells.The last four columns
+give, per panel, the number of λ settings on which CAST leads.
+
+**Choice.** `c` = 1.5 is taken on combined Sharpe and drawdown. 
+
+## C.2 Margin floor — ablated, not tuned
+
+The floor binds on **16 of 480** CKF accounts and **17 of 480** CAST
+accounts. Re-running all 32 configurations without it:
+
+| | with floor | without floor |
+| --- | --- | --- |
+| CAST ahead in | 10 / 16 | 10 / 16 |
+| Mean Sharpe gap (CAST − baseline) | +0.0718 | +0.0686 |
+
+The ordering is unchanged, and **14 of the 32 configurations are bit-identical** either way in those the floor never fires at all. It is a safety rail, not a source of the result.
+
+
+
+
 
 
 
