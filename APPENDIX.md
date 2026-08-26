@@ -356,7 +356,7 @@ CAST has the lower drawdown than CKF on three of four panels under either settin
 
 ### D.3.1 Comparison
 
-The Risk Weight update frequency mentioned above is monthly. We also conducted experiments with weekly and quarterly update frequencies for comparison. This temporarily improved the flexibility of our model in adapting to different markets.
+The Risk Weight update frequency mentioned above is monthly. We also conducted experiments with weekly and quarterly update frequencies for comparison. This highlights the flexibility of our model in adapting to different markets.
 
 | Panel | Method | Sharpe wk | Sharpe mo | Sharpe qt | MaxDD wk | MaxDD mo | MaxDD qt |
 | --- | --- | --- | --- | --- | --- | --- | --- |
