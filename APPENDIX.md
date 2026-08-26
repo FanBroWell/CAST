@@ -302,6 +302,83 @@ accounts. Re-running all 32 configurations without it:
 
 The ordering is unchanged, and **14 of the 32 configurations are bit-identical** either way in those the floor never fires at all. It is a safety rail, not a source of the result.
 
+# Appendix D — An Adaptive Risk Weight
+
+## D.1 What changes
+
+In the main results, the risk weight "λ" is a fixed value. To verify the flexibility of our model in different markets, we added some experiments by redesigning the risk weights "λ" to be updated online.
+
+Here the weight is allowed to move:
+
+```
+λ · Σ_l |u_{k+l}| σ_l        →        λ_k · Σ_l |u_{k+l}| σ_l
+```
+
+The other settings of the experiment are consistent with those of the main experiment.
+
+## D.2 How `λ_k` is chosen
+
+Every 21 trading days, the real account switches to the account with the highest Sharpe ratio among the four accounts over the past 252 days. Before these 252 days, it uses `λ = 0.1`. The tracking window is `[k-252, k)`, thus only referencing events that have already occurred.
+
+## D.3 Results
+
+Annualised Sharpe on the test window. The **fixed** columns reproduce Table I exactly, so the two settings are directly comparable.
+
+| Panel | CAST fixed | CAST adaptive | CKF fixed | CKF adaptive |
+| --- | --- | --- | --- | --- |
+| NASDAQ | 0.523 | **0.717** | 0.339 | **0.392** |
+| CSI300 | 0.269 | 0.248 | 0.138 | −0.007 |
+| TPX100 | 0.228 | 0.227 | 0.384 | 0.222 |
+| Global30 | 0.516 | 0.483 | 0.331 | 0.237 |
+
+CAST minus CKF:
+
+| Panel | fixed | adaptive |
+| --- | --- | --- |
+| NASDAQ | +0.184 | +0.325 |
+| CSI300 | +0.131 | +0.255 |
+| TPX100 | −0.156 | +0.005 |
+| Global30 | +0.186 | +0.246 |
+| Panels led | 3 / 4 | 4 wins |
+
+The lead widens on the three panels CAST already led, and TPX100 moves from a clear loss to a tie. Both methods face the same rule.
+
+Maximum drawdown over the same window (lower is better, the fixed columns again match Table I exactly):
+
+| Panel | CAST fixed | CAST adaptive | CKF fixed | CKF adaptive |
+| --- | --- | --- | --- | --- |
+| NASDAQ | 0.114 | 0.117 | 0.103 | 0.135 |
+| CSI300 | 0.158 | 0.155 | 0.218 | 0.193 |
+| TPX100 | 0.134 | 0.212 | 0.150 | 0.136 |
+| Global30 | 0.031 | 0.105 | 0.107 | 0.107 |
+
+CAST has the lower drawdown than CKF on three of four panels under either setting. For CAST, it rises on three panels, most of all on Global30, from 0.031 to 0.105. The adaptive weight therefore buys Sharpe at some expense of drawdown, and the two tables should be read together.
+
+### D.3.1 Comparison
+
+The Risk Weight update frequency mentioned above is monthly. We also conducted experiments with weekly and quarterly update frequencies for comparison. This temporarily improved the flexibility of our model in adapting to different markets.
+
+| Panel | Method | Sharpe wk | Sharpe mo | Sharpe qt | MaxDD wk | MaxDD mo | MaxDD qt |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| NASDAQ | CAST | 0.604 | 0.717 | 0.728 | 0.104 | 0.117 | 0.148 |
+| NASDAQ | CKF | 0.289 | 0.392 | 0.446 | 0.143 | 0.135 | 0.144 |
+| CSI300 | CAST | 0.117 | 0.248 | 0.099 | 0.153 | 0.155 | 0.188 |
+| CSI300 | CKF | −0.090 | −0.007 | −0.006 | 0.265 | 0.193 | 0.203 |
+| TPX100 | CAST | 0.150 | 0.227 | 0.255 | 0.193 | 0.212 | 0.192 |
+| TPX100 | CKF | 0.170 | 0.222 | 0.238 | 0.176 | 0.136 | 0.193 |
+| Global30 | CAST | 0.563 | 0.483 | 0.460 | 0.135 | 0.105 | 0.150 |
+| Global30 | CKF | 0.368 | 0.237 | 0.213 | 0.169 | 0.107 | 0.118 |
+
+
+## D.4 Figures
+
+![Online lambda path](figures/fig_lambda_path.png)
+- **`fig_lambda_path.png`** — the weight actually chosen each month. It moves
+  across the whole grid, and the two methods often disagree.
+
+![Equity curves](figures/fig_equity.png)
+- **`fig_equity.png`** — equity curves, fixed (faded) against adaptive (solid).
+
 
 
 
