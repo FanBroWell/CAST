@@ -2,7 +2,7 @@
 
 ### A Cross-Asset State-Space Trading System for Drawdown Control in Stock Markets
 
-Official implementation of CAST, a cross-asset state-space trading system for drawdown-aware stock trading.
+Official implementation of CAST.
 
 Accepted at **IEEE International Conference on Data Mining (ICDM 2026)**.
 
