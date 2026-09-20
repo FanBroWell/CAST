@@ -4,7 +4,7 @@
 
 Official implementation of CAST.
 
-Accepted at **IEEE International Conference on Data Mining (ICDM 2026)**.
+Accepted at **[IEEE International Conference on Data Mining (ICDM 2026)](https://icdm2026.neu.edu.cn/)**.
 
 ----
 
