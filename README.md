@@ -53,10 +53,6 @@ CAST/
   <img src="./figures/Overall_Comparison.png" alt="CAST Overall Comparison" width="900">
 </p>
 
-
-
-
-
 ---
 ## Datasets
 
@@ -72,12 +68,6 @@ Four panels of 30 daily-close stocks, January 2005 to April 2025:
 Each panel is one `.parquet` (prices) + one `.json` (tickers). 
 
 Global30 prices (different currencies) are normalized to the first-day value before backtesting, while the other three datasets use raw prices.
-
----
-
-## Overall Comparison
-
-![COMPARISON OF DIFFERENT METHODS](./figures/Overall_Comparison.png)
 
 ---
 
