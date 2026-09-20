@@ -6,6 +6,25 @@ Official implementation of CAST, a cross-asset state-space trading system for dr
 
 Accepted at **IEEE International Conference on Data Mining (ICDM 2026)**.
 
+----
+
+## Paper
+
+Our paper is available on arXiv:
+
+**CAST: A Cross-Asset State-Space Trading System for Drawdown Control in Stock Markets**  
+Yu Peng, Matloob Khushi, Josiah Poon  
+Accepted at IEEE International Conference on Data Mining (ICDM 2026)  
+arXiv:2609.14205, 2026  
+[Paper](https://arxiv.org/abs/2609.14205) | [PDF](https://arxiv.org/pdf/2609.14205)
+
+----
+
+CAST is a modular and interpretable trading system designed for drawdown control in stock markets. It consists of two components:
+
+* **CoKF**: a Cross-Asset Collaborative Kalman Filter that estimates each asset's latent state online, couples assets through cross-asset correlations, and adaptively fuses multiple integrated-random-walk orders.
+* **MPC**: a Model Predictive Control module that converts forecasts into trading decisions using forecast uncertainty as an explicit risk penalty.
+
 ---
 
 ## Repository Layout
@@ -27,6 +46,16 @@ CAST/
 └── experiments/
     └── m30_main_results.py
 ```
+
+## Overall Comparison
+
+<p align="center">
+  <img src="./figures/Overall_Comparison.png" alt="CAST Overall Comparison" width="900">
+</p>
+
+
+
+
 
 ---
 ## Datasets
@@ -87,3 +116,36 @@ Two CSVs are written to data/:
 >m30_main_results_best_lambda.csv — best $\lambda$ per (dataset, method). Matches Table I of the paper.
 
 ---
+
+## Citation
+
+If you find this repository or paper useful, please cite our work.
+
+### BibTeX
+
+    @misc{peng2026cast,
+      title = {{CAST}: A Cross-Asset State-Space Trading System for Drawdown Control in Stock Markets},
+      author = {Peng, Yu and Khushi, Matloob and Poon, Josiah},
+      year = {2026},
+      eprint = {2609.14205},
+      archivePrefix = {arXiv},
+      primaryClass = {cs.CE},
+      doi = {10.48550/arXiv.2609.14205},
+      url = {https://arxiv.org/abs/2609.14205},
+      note = {Accepted at IEEE International Conference on Data Mining (ICDM 2026)}
+    }
+
+### APA
+
+    `Peng, Y., Khushi, M., & Poon, J. (2026). CAST: A Cross-Asset State-Space Trading System for Drawdown Control in Stock Markets. arXiv. https://doi.org/10.48550/arXiv.2609.14205
+    `
+
+### IEEE
+
+    `Y. Peng, M. Khushi, and J. Poon, "CAST: A Cross-Asset State-Space Trading System for Drawdown Control in Stock Markets," arXiv:2609.14205, 2026. doi: 10.48550/arXiv.2609.14205.
+    `
+
+### Plain Text
+
+    `Yu Peng, Matloob Khushi, and Josiah Poon. CAST: A Cross-Asset State-Space Trading System for Drawdown Control in Stock Markets. arXiv:2609.14205, 2026. https://arxiv.org/abs/2609.14205
+    `
