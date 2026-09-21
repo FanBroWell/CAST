@@ -102,7 +102,7 @@ Settings:
 Backtest timing and calibration:
 
 - Decisions are made after observing the current close and are executed at the next close.
-- $\rho$, $\sigma_v$, and $\sigma_w$ are calibrated only from pre-2010 data and kept fixed during the 2010-2025 test window.
+- $\rho$ and the Kalman noise parameters ($\sigma_v$, $\sigma_w$) are calibrated only from pre-2010 data and kept fixed during the 2010-2025 test window.
 - During testing, Kalman states and model-order weights are updated online using only information available up to the current day.
 
 Running `experiments/m30_main_results.py` generates the following CSV files under `data/`:
