@@ -87,7 +87,7 @@ Requires Python ≥ 3.10. CPU only — no GPU/CUDA needed. A full run takes ~40 
 python3 -u experiments/m30_main_results.py
 ```
 
-Settings (paper-locked):
+Settings:
 
 | Parameter             | Value                              |
 |-----------------------|------------------------------------|
@@ -99,11 +99,17 @@ Settings (paper-locked):
 | $\lambda$ grid        | {0.05, 0.1, 0.3, 0.6}              |
 | IRW orders            | (1, 2, 3)                          |
 
-Two CSVs are written to data/:
+Backtest timing and calibration:
 
->m30_main_results.csv — one per (dataset, $\lambda$, method).
+- Decisions are made after observing the current close and are executed at the next close.
+- `rho`, `sigma_v`, and `sigma_w` are calibrated only from pre-2010 data and kept fixed during the 2010-2025 test window.
+- During testing, Kalman states and model-order weights are updated online using only information available up to the current day.
 
->m30_main_results_best_lambda.csv — best $\lambda$ per (dataset, method). Matches Table II of the paper.
+Running `experiments/m30_main_results.py` generates the following CSV files under `data/`:
+
+- `m30_main_results.csv`: full sweep over the reported MPC risk weights, one row per `(dataset, lambda, method)`.
+- `m30_main_results_best_lambda.csv`: post-hoc summary selecting the highest test-window Sharpe within the reported lambda grid. This file is provided as a convenience summary for inspecting the lambda sensitivity results, not as a validation-selected evaluation protocol.
+
 
 ---
 
