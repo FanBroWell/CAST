@@ -103,7 +103,7 @@ Two CSVs are written to data/:
 
 >m30_main_results.csv — one per (dataset, $\lambda$, method).
 
->m30_main_results_best_lambda.csv — best $\lambda$ per (dataset, method). Matches Table I of the paper.
+>m30_main_results_best_lambda.csv — best $\lambda$ per (dataset, method). Matches Table II of the paper.
 
 ---
 
