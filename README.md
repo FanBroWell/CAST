@@ -108,7 +108,7 @@ Backtest timing and calibration:
 Running `experiments/m30_main_results.py` generates the following CSV files under `data/`:
 
 - `m30_main_results.csv`: full sweep over the reported MPC risk weights, one row per `(dataset, lambda, method)`.
-- `m30_main_results_best_lambda.csv`: post-hoc summary of the best-Sharpe operating point within the reported lambda grid. This file is provided only for inspecting lambda sensitivity, not as a validation-selected evaluation protocol.
+- `m30_main_results_best_lambda.csv`: post-hoc summary of the best-Sharpe operating point within the reported lambda grid. This file is provided only for inspecting the Fig. 6 lambda sensitivity analysis, not as a validation-selected evaluation protocol.
 
 
 ---
