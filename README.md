@@ -1,29 +1,56 @@
-# CAST
+# [CAST](https://fanbrowell.github.io/CAST/): A Cross-Asset State-Space Trading System for Drawdown Control in Stock Markets
 
-### A Cross-Asset State-Space Trading System for Drawdown Control in Stock Markets
+<p align="left">
+  <a href="https://arxiv.org/abs/2609.14205"><img src="https://img.shields.io/badge/arXiv-2609.14205-b31b1b?logo=arxiv&logoColor=white" alt="arXiv"></a>
+  <a href="https://arxiv.org/pdf/2609.14205"><img src="https://img.shields.io/badge/Paper-PDF-b31b1b" alt="PDF"></a>
+  <a href="https://fanbrowell.github.io/CAST/"><img src="https://img.shields.io/badge/Project_Page-up-2ea44f" alt="Project Page"></a>
+  <a href="https://icdm2026.neu.edu.cn/"><img src="https://img.shields.io/badge/IEEE_ICDM-2026-00629B" alt="ICDM 2026"></a>
+  <a href="#citation"><img src="https://img.shields.io/badge/BibTeX-Citation-blue" alt="BibTeX"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue" alt="License"></a>
+  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Compute-CPU_only-2ea44f" alt="CPU only">
+  <a href="https://github.com/FanBroWell/CAST/stargazers"><img src="https://img.shields.io/github/stars/FanBroWell/CAST?style=social" alt="GitHub stars"></a>
+</p>
 
-Official implementation of CAST.
+<table>
+  <tr>
+    <td width="46%"><img src="./figures/fig_equity.png" alt="CAST equity curves, 2010-2025"></td>
+    <td>
+      <a href="https://fanbrowell.github.io/CAST/"><b>A Cross-Asset State-Space Trading System for Drawdown Control in Stock Markets</b></a><br>
+      Accepted at <a href="https://icdm2026.neu.edu.cn/">IEEE ICDM 2026</a><br><br>
+      <a href="https://ypeng.online/">Yu Peng</a><sup>1</sup>,
+      <a href="https://www.brunel.ac.uk/people/matloob-khushi">Matloob Khushi</a><sup>2</sup>,
+      <a href="https://www.sydney.edu.au/engineering/about/our-people/academic-staff/josiah-poon.html">Josiah Poon</a><sup>1</sup><br><br>
+      <sup>1</sup> The University of Sydney &nbsp;&nbsp; <sup>2</sup> Brunel University London<br><br>
+      <a href="https://arxiv.org/abs/2609.14205">arXiv:2609.14205</a> &nbsp;|&nbsp;
+      <a href="https://arxiv.org/pdf/2609.14205">PDF</a> &nbsp;|&nbsp;
+      <a href="https://fanbrowell.github.io/CAST/">Project Page</a>
+    </td>
+  </tr>
+</table>
 
-Accepted at **[IEEE International Conference on Data Mining (ICDM 2026)](https://icdm2026.neu.edu.cn/)**.
+> **TL;DR:** A forecasting model knows how unsure it is — the step that decides *how much to bet* almost never asks. CAST closes that loop: the filter's own uncertainty **is** the risk term inside the controller that sizes the trade. Training-free, gradient-free, CPU only.
 
-----
-
-## Paper
-
-Our paper is available on arXiv:
-
-**CAST: A Cross-Asset State-Space Trading System for Drawdown Control in Stock Markets**  
-Yu Peng, Matloob Khushi, Josiah Poon  
-Accepted at IEEE International Conference on Data Mining (ICDM 2026)  
-arXiv:2609.14205, 2026  
-[Paper](https://arxiv.org/abs/2609.14205) | [PDF](https://arxiv.org/pdf/2609.14205)
-
-----
-
+<details>
+<summary>Click here to read the <b>method summary 📝</b></summary>
+<br>
 CAST is a modular and interpretable trading system designed for drawdown control in stock markets. It consists of two components:
 
 * **CoKF**: a Cross-Asset Collaborative Kalman Filter that estimates each asset's latent state online, couples assets through cross-asset correlations, and adaptively fuses multiple integrated-random-walk orders.
 * **MPC**: a Model Predictive Control module that converts forecasts into trading decisions using forecast uncertainty as an explicit risk penalty.
+
+Filter parameters are calibrated on pre-2010 data and held fixed across the 2010&ndash;2025 test window, over four panels of thirty daily-close stocks (NASDAQ, CSI&nbsp;300, TPX100, Global30).
+</details>
+
+---
+
+🔗 **Contents**
+1. [Repository Layout](#repository-layout)
+1. [Overall Comparison](#overall-comparison)
+1. [Datasets](#datasets)
+1. [Setup](#setup)
+1. [Reproducing the Main Results](#reproducing-the-main-results)
+1. [Citation](#citation)
 
 ---
 
