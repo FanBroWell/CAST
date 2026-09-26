@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CAST</title>
+<meta name="description" content="CAST: A Cross-Asset State-Space Trading System for Drawdown Control in Stock Markets. IEEE ICDM 2026.">
+<meta property="og:title" content="CAST — Cross-Asset State-Space Trading">
+<meta property="og:description" content="A cross-asset collaborative Kalman filter feeding a model predictive controller that prices forecast uncertainty as an explicit risk penalty. IEEE ICDM 2026.">
+<meta property="og:image" content="https://fanbrowell.github.io/CAST/figures/fig_equity.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&family=Source+Code+Pro:wght@400;600&display=swap">
+
+<style>
+/* ------------------------------------------------------------------
+   Minimal re-declaration of the Bootstrap 4.5 rules this page uses,
+   so the layout holds even where the CDN stylesheet is unavailable.
+   ------------------------------------------------------------------ */
+.container{width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}
+.row{display:flex;flex-wrap:wrap;margin-right:-15px;margin-left:-15px}
+.col-md-12{position:relative;width:100%;padding-right:15px;padding-left:15px;flex:0 0 100%;max-width:100%}
+.text-center{text-align:center}
+.btn{display:inline-block;font-weight:400;text-align:center;vertical-align:middle;
+  user-select:none;border:1px solid transparent;padding:.375rem .75rem;font-size:1rem;
+  line-height:1.5;border-radius:.25rem;text-decoration:none;
+  transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out}
+.btn-light{color:#212529;background-color:#f8f9fa;border-color:#f8f9fa}
+.btn-light:hover{color:#212529;background-color:#e2e6ea;border-color:#dae0e5;text-decoration:none}
+hr{box-sizing:content-box;height:0;overflow:visible;border:0;border-top:1px solid rgba(0,0,0,.1);
+  margin-top:1rem;margin-bottom:1rem}
+
+/* ------------------------------------------------------------------
+   relsim / visii / DreamFusion house styles
+   ------------------------------------------------------------------ */
+body{
+  font-family:'Source Sans Pro',sans-serif;
+  padding-bottom:50px;
+  color:#313437;
+  background-color:#fff;
+  margin:0;
+  font-size:17px;
+  line-height:1.6;
+}
+h1,h2,h3,h4,h5,h6{
+  font-family:'Source Sans Pro',Calibri,Candara,Arial,sans-serif;
+  font-weight:300;line-height:1.1;color:inherit;
+}
+.highlight-clean{color:#313437;background-color:#fff;padding:58px 0 14px}
+.divider{max-width:768px;margin-top:46px;margin-bottom:46px;border-top-color:rgba(0,0,0,.07)}
+.btn:hover{opacity:1}
+.btn:active{transform:translateY(1px)}
+.btn-light.disabled{background-color:#ccc}
+a{color:#0b6cbf}
+a:hover{color:#08507f}
+
+/* ---------- title block ---------- */
+h1.title{
+  font-size:clamp(58px,11vw,104px);font-weight:600;letter-spacing:-.035em;
+  margin:0 0 6px;display:flex;align-items:center;justify-content:center;gap:.01em;
+  line-height:1;
+}
+h1.title .bull{
+  height:.92em;width:auto;display:block;position:relative;top:.03em;
+  margin:0 -.015em;
+}
+.subtitle{font-size:clamp(22px,3.4vw,32px);font-weight:300;line-height:1.24;
+  color:#313437;margin:0 0 18px;letter-spacing:-.012em}
+.venue{font-size:clamp(17px,2.2vw,21px);font-weight:300;color:#5c6266;margin:0 0 22px}
+.venue .rule{color:#c6cacd}
+.authors{font-size:clamp(17px,2.2vw,21px);font-weight:400;line-height:1.6;margin:0 0 6px}
+.authors a{color:#0b6cbf;text-decoration:none}
+.authors a:hover{color:#08507f;text-decoration:underline}
+.authors sup{font-size:.62em;font-weight:400;color:#7d8285;margin-left:1px}
+.affil{font-size:16px;font-weight:300;color:#7d8285;margin:0 0 26px;line-height:1.5}
+.affil sup{font-size:.72em;margin-right:2px}
+
+/* ---------- hero slot (first screen) ---------- */
+.hero-slot{max-width:900px;margin:0 auto}
+.hero-slot img{display:block;width:100%;height:auto;border-radius:4px}
+.hero-ph{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;min-height:340px;border:2px dashed #d7dadd;border-radius:6px;
+  background:#fbfbfc;color:#9aa0a5;text-align:center;padding:30px;
+}
+.hero-ph .t{font-size:17px;font-weight:600;color:#7d8285;letter-spacing:.01em}
+.hero-ph .s{font-size:14.5px;line-height:1.55;max-width:460px}
+.hero-ph code{font-family:'Source Code Pro',monospace;font-size:13px;color:#C33A1C;background:none;padding:0}
+
+/* ---------- button rows ---------- */
+.buttons{text-align:center;margin-bottom:8px}
+.buttons .btn{
+  margin:4px 3px;font-size:16px;padding:8px 16px;
+  display:inline-flex;align-items:center;gap:8px;line-height:1;
+  border:1px solid #e6e8ea;
+}
+.buttons .btn img,.buttons .btn svg{display:block;flex:none}
+.arxiv-mark{font-family:Georgia,'Times New Roman',serif;font-size:18px;letter-spacing:-.02em}
+.arxiv-mark .x{color:#B31B1B;font-style:italic}
+.bibtex-mark{font-family:Georgia,'Times New Roman',serif;font-size:15px}
+.bibtex-mark .sc{font-size:12px;text-transform:uppercase}
+
+/* ---------- content ---------- */
+.body-text{max-width:768px;margin:0 auto;text-align:left}
+.body-text h2{
+  font-size:15px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+  color:#9aa0a5;margin:0 0 20px;text-align:left;position:relative;padding-top:14px;
+}
+.body-text h2::before{
+  content:"";position:absolute;top:0;left:0;width:26px;height:3px;
+  background:#C33A1C;border-radius:2px;
+}
+.body-text h3{font-size:21px;font-weight:600;margin:0 0 6px;letter-spacing:-.01em}
+.body-text p{margin:0 0 16px}
+.body-text p:last-child{margin-bottom:0}
+.lead-line{font-size:23px;font-weight:300;line-height:1.45;color:#313437}
+.lead-line em{font-style:normal;color:#C33A1C;font-weight:400}
+
+figure{margin:0}
+figure img{display:block;width:100%;height:auto;border:1px solid #e6e8ea;border-radius:3px;background:#fff}
+figcaption{font-size:14px;line-height:1.5;color:#7d8285;margin-top:10px;text-align:left}
+figcaption b{color:#313437;font-weight:600}
+
+.duo{display:flex;flex-wrap:wrap;gap:30px}
+.duo>div{flex:1 1 320px;min-width:0}
+.tagline{font-family:'Source Code Pro',monospace;font-size:12px;letter-spacing:.08em;
+  color:#C33A1C;display:block;margin-bottom:2px}
+
+.objective{
+  font-family:'Source Code Pro',monospace;font-size:15px;line-height:1.95;
+  background:#f8f9fa;border:1px solid #e6e8ea;border-radius:4px;
+  padding:18px 20px;overflow-x:auto;margin:0 0 16px;text-align:left;
+}
+.objective .hl{color:#C33A1C}
+.gloss{list-style:none;padding:0;margin:0}
+.gloss li{display:flex;gap:12px;align-items:baseline;font-size:15.5px;line-height:1.5;margin-bottom:8px}
+.gloss code{font-family:'Source Code Pro',monospace;font-size:13.5px;color:#C33A1C;white-space:nowrap;background:none;padding:0}
+
+.tl-bar{display:flex;height:34px;border:1px solid #e6e8ea;border-radius:3px;overflow:hidden;
+  font-family:'Source Code Pro',monospace;font-size:12px;letter-spacing:.04em;margin-bottom:8px}
+.tl-bar div{display:flex;align-items:center;justify-content:center;text-align:center;padding:0 8px}
+.tl-cal{flex:1;background:#f6e3dd;color:#C33A1C}
+.tl-test{flex:3;background:#f8f9fa;color:#7d8285;border-left:1px solid #e6e8ea}
+.tl-ends{display:flex;justify-content:space-between;font-family:'Source Code Pro',monospace;
+  font-size:12px;color:#9aa0a5;letter-spacing:.04em}
+
+.facts{list-style:none;padding:0;margin:20px 0 0;border-top:1px solid #eceef0}
+.facts li{display:flex;flex-wrap:wrap;gap:6px 18px;padding:10px 0;border-bottom:1px solid #eceef0;
+  font-size:15.5px;line-height:1.5}
+.facts .k{font-family:'Source Code Pro',monospace;font-size:12px;letter-spacing:.06em;
+  text-transform:uppercase;color:#9aa0a5;flex:0 0 150px}
+.facts .v{flex:1 1 320px;font-variant-numeric:tabular-nums}
+
+.caveat{border-left:2px solid #C33A1C;padding:2px 0 2px 16px;font-size:15.5px;
+  line-height:1.55;color:#7d8285;margin:22px 0 0}
+.caveat b{color:#313437;font-weight:600}
+
+pre{font-family:'Source Code Pro',monospace;font-size:13.5px;line-height:1.75;
+  background:#f8f9fa;border:1px solid #e6e8ea;border-radius:4px;padding:16px 18px;
+  overflow-x:auto;margin:0;text-align:left;color:#313437}
+.cmd{color:#C33A1C}
+.citation{font-family:'Source Code Pro',monospace;font-size:12.5px;text-align:left}
+
+.footer-note{max-width:768px;margin:0 auto;padding-bottom:30px;text-align:left;
+  color:gray;font-size:90%}
+
+@media (max-width:600px){
+  h1.title{letter-spacing:-.03em}
+  .subtitle{font-size:21px}
+  .lead-line{font-size:20px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
+
+/* ---------- affiliation logo row ---------- */
+.logos{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:16px 40px;margin:4px 0 32px}
+.logos .unit{display:flex;align-items:center;gap:11px}
+.logos .num{font-size:15px;color:#b3b8bc;font-weight:400}
+/* Optical height, not pixel height: a dense square block reads heavier than a
+   wide wordmark, so it is set smaller. Tune per logo with the modifier class. */
+.logos img{display:block;height:44px;width:auto}
+.logos img.block{height:37px}          /* square / stacked lockups */
+.logos img.wide{height:46px}           /* long horizontal wordmarks */
+.logos [hidden]{display:none!important}
+/* Fallback for coloured logo files: uncomment to flatten them to the page's ink
+   so a red or navy brand block does not fight the palette.
+.logos img{filter:grayscale(1) contrast(1.15) brightness(.55)}
+*/
+/* typographic stand-in used until the real logo files are dropped in */
+.logos .wordmark{display:flex;flex-direction:column;line-height:1.05;text-align:left}
+.logos .wordmark .a{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9aa0a5}
+.logos .wordmark .b{font-size:21px;font-weight:600;letter-spacing:-.015em;color:#313437}
+
+/* ---------- dataset cards ---------- */
+.panels{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0 0 18px}
+@media (max-width:720px){.panels{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:420px){.panels{grid-template-columns:1fr}}
+.panel{
+  border:1px solid #e6e8ea;border-radius:5px;padding:16px 15px 15px;
+  background:#fff;transition:border-color .14s ease,transform .14s ease;
+}
+.panel:hover{border-color:#c9ced2;transform:translateY(-2px)}
+.panel .flag{font-family:'Source Code Pro',monospace;font-size:11px;
+  letter-spacing:.11em;text-transform:uppercase;color:#C33A1C;display:block;margin-bottom:7px}
+.panel .nm{font-size:20px;font-weight:600;letter-spacing:-.015em;color:#313437;
+  display:block;line-height:1.15;margin-bottom:5px}
+.panel .ds{font-size:14px;line-height:1.45;color:#7d8285}
+.panel-note{font-size:15px;color:#7d8285;margin:0}
+.panel-note b{color:#313437;font-weight:600}
+
+/* ---------- generic drop-in slot ---------- */
+.slot{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:9px;border:2px dashed #d7dadd;border-radius:6px;background:#fbfbfc;
+  color:#9aa0a5;text-align:center;padding:30px}
+.slot .t{font-size:16px;font-weight:600;color:#7d8285}
+.slot .s{font-size:14px;line-height:1.55;max-width:470px}
+.slot code{font-family:'Source Code Pro',monospace;font-size:13px;color:#C33A1C;background:none;padding:0}
+.slot-hero{min-height:330px}
+.slot-poster{min-height:420px}
+.slot-arch{min-height:260px}
+</style>
+</head>
+
+<body>
+
+<!-- ======================== TITLE ======================== -->
+<div class="highlight-clean">
+  <div class="container" style="max-width: 860px;">
+    <h1 class="title text-center">C<svg class="bull" viewBox="0 0 120 112" role="img" aria-label="A">
+      <title>A — bull head with a nose ring</title>
+      <path d="M36 46 C22 40 13 28 11 13 C25 17 37 27 43 38" fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M84 46 C98 40 107 28 109 13 C95 17 83 27 77 38" fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M60 32 C44 32 37 41 37 52 C37 68 46 84 60 94 C74 84 83 68 83 52 C83 41 76 32 60 32 Z" fill="currentColor"/>
+      <ellipse cx="60" cy="97" rx="12" ry="10" fill="none" stroke="#C33A1C" stroke-width="6"/>
+    </svg>ST</h1>
+    <p class="subtitle text-center">A Cross-Asset State-Space Trading System<br>for Drawdown Control in Stock Markets</p>
+    <p class="venue text-center"><span class="rule">———</span> IEEE ICDM 2026 <i style="font-size:.85em">see you in Shenyang</i> <span class="rule">———</span></p>
+
+    <p class="authors text-center">
+      <a href="https://ypeng.online/">Yu Peng</a><sup>1</sup> &nbsp;·&nbsp;
+      <a href="https://www.brunel.ac.uk/people/matloob-khushi">Matloob Khushi</a><sup>2</sup> &nbsp;·&nbsp;
+      <a href="https://www.sydney.edu.au/engineering/about/our-people/academic-staff/josiah-poon.html">Josiah Poon</a><sup>1</sup>
+    </p>
+
+    <!-- Affiliation logos.  Drop the official files in as
+         figures/logo-usyd.png and figures/logo-brunel.png, then replace each
+         <span class="wordmark">…</span> with:
+             <img src="figures/logo-usyd.png" alt="The University of Sydney">   -->
+    <div class="logos">
+      <span class="unit">
+        <span class="num">1.</span>
+        <img class="wide" src="figures/logo-usyd.png" alt="The University of Sydney"
+             onerror="this.hidden=true;this.nextElementSibling.hidden=false">
+        <span class="wordmark" hidden><span class="a">The University of</span><span class="b">Sydney</span></span>
+      </span>
+      <span class="unit">
+        <span class="num">2.</span>
+        <img class="block" src="figures/logo-brunel.png" alt="Brunel University London"
+             onerror="this.hidden=true;this.nextElementSibling.hidden=false">
+        <span class="wordmark" hidden><span class="a">Brunel University</span><span class="b">London</span></span>
+      </span>
+    </div>
+
+    <div class="buttons">
+      <center>
+        <a class="btn btn-light" role="button" href="https://arxiv.org/abs/2609.14205">
+          <span class="arxiv-mark">ar<span class="x">X</span>iv</span> Paper
+        </a>
+        <a class="btn btn-light" role="button" href="https://arxiv.org/pdf/2609.14205">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 11v6"/><path d="M9.5 14.5 12 17l2.5-2.5"/></svg>
+          PDF
+        </a>
+        <a class="btn btn-light" role="button" href="https://github.com/FanBroWell/CAST">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          Code
+        </a>
+        <a class="btn btn-light" role="button" href="#citation">
+          <span class="bibtex-mark">B<span class="sc">ib</span>T<span class="sc">e</span>X</span> Citation
+        </a>
+      </center>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ======================== 1 · HERO IMAGE ======================== -->
+<!-- Save your hero image as figures/teaser.png, then replace the whole
+     <div class="slot slot-hero">…</div> block with:
+         <img src="figures/teaser.png" alt="…">                          -->
+<div class="container" style="max-width: 920px;">
+  <!-- TO FILL: save the hero graphic as figures/teaser.png, then replace the
+       whole <div class="slot slot-hero"> block below with:
+           <img src="figures/teaser.png" alt="...">
+       Recommended 1800 x 800 px or wider. -->
+  <div class="hero-slot">
+    <div class="slot slot-hero">
+      <div class="t">Teaser figure</div>
+      <div class="s">Coming shortly.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ======================== 2 · ABSTRACT ======================== -->
+<div class="body-text">
+  <h2>Abstract</h2>
+  <p class="lead-line" style="margin-bottom:18px">
+    A forecasting model knows how unsure it is. The step that decides <em>how much to bet</em> almost never asks.
+  </p>
+  <p>
+    Most machine-learning trading pipelines run in two decoupled stages: a model predicts returns, then a
+    heuristic &mdash; top-<i>k</i>, equal weight, a fixed volatility target &mdash; turns those predictions
+    into positions. The model&rsquo;s own uncertainty is discarded at exactly the moment it would be most useful.
+  </p>
+  <p>
+    CAST closes that loop. A cross-asset collaborative Kalman filter estimates each stock&rsquo;s latent state
+    online, coupling thirty names through a correlation matrix fitted before 2010 and fusing three
+    integrated-random-walk orders by online Bayesian model averaging. A model predictive controller then
+    turns those forecasts into positions, and the uncertainty it is charged for is built from the
+    <i>same</i> fused weights that produced the forecast. Position size therefore shrinks exactly when the
+    filter is least sure, and drawdown control becomes the objective the system optimises rather than a
+    metric reported afterwards.
+  </p>
+  <p style="margin-bottom:0">
+    The system is training-free and gradient-free: no neural network, no gradients, CPU only. We evaluate
+    on four panels of thirty daily-close stocks &mdash; NASDAQ, CSI&nbsp;300, TPX100 and a cross-currency
+    basket &mdash; over fifteen unbroken years, with the filter parameters calibrated on pre-2010 data and
+    never refitted.
+  </p>
+</div>
+
+<hr class="divider">
+
+<!-- ======================== 3 · POSTER ======================== -->
+<!-- TO FILL: save the poster as figures/poster.png and figures/poster.pdf, then
+     replace the <div class="slot slot-poster"> block below with:
+         <a href="figures/poster.pdf"><img src="figures/poster.png" alt="CAST poster"></a> -->
+<div class="body-text" id="poster">
+  <h2>Poster</h2>
+  <div class="slot slot-poster">
+    <div class="t">ICDM 2026 poster</div>
+    <div class="s">Coming after the conference.</div>
+  </div>
+</div>
+
+<!-- ======================== 4 · DATASETS ======================== -->
+<div class="body-text">
+  <h2>Datasets</h2>
+  <div class="panels">
+    <div class="panel">
+      <span class="flag">United States</span>
+      <span class="nm">NASDAQ</span>
+      <span class="ds">Large-cap US equities</span>
+    </div>
+    <div class="panel">
+      <span class="flag">China</span>
+      <span class="nm">CSI&nbsp;300</span>
+      <span class="ds">Large-cap A-shares</span>
+    </div>
+    <div class="panel">
+      <span class="flag">Japan</span>
+      <span class="nm">TPX100</span>
+      <span class="ds">Tokyo blue-chips</span>
+    </div>
+    <div class="panel">
+      <span class="flag">Cross-currency</span>
+      <span class="nm">Global30</span>
+      <span class="ds">Mixed-currency basket</span>
+    </div>
+  </div>
+  <p class="panel-note">
+    <b>Four panels of thirty daily-close stocks, January 2005 – April 2025.</b>
+    Each panel is one parquet file of prices plus a JSON ticker list. Global30 spans several
+    currencies, so its prices are normalised to their first-day value before backtesting; the other
+    three panels use raw prices.
+  </p>
+</div>
+
+<hr class="divider">
+
+<!-- ======================== 5 · METHOD ======================== -->
+<div class="body-text">
+  <h2>Method</h2>
+
+  <!-- TO FILL: save the architecture diagram as figures/architecture.png, then
+       replace the <div class="slot slot-arch"> block below with:
+           <img src="figures/architecture.png" alt="CAST architecture: CoKF feeding the MPC loop"> -->
+  <div class="slot slot-arch" style="margin-bottom:30px">
+    <div class="t">Architecture diagram</div>
+    <div class="s">The CoKF &rarr; MPC loop, with &sigma; drawn as the feedback limb.</div>
+  </div>
+
+  <div class="duo">
+    <div>
+      <h3><span class="tagline">Estimator</span>CoKF</h3>
+      <p>
+        A cross-asset collaborative Kalman filter estimates each stock&rsquo;s latent state online. Thirty
+        stocks share one joint state, coupled through a correlation matrix fitted before 2010, so a move
+        in one name corrects the estimates of the others.
+      </p>
+      <p>
+        Three integrated-random-walk orders &mdash; level, trend, curvature &mdash; run in parallel as
+        competing hypotheses about how smooth a trend is. Their weights are re-estimated every day, per
+        stock, by online Bayesian model averaging over how well each predicted the last seven days.
+      </p>
+    </div>
+    <div>
+      <h3><span class="tagline">Controller</span>MPC</h3>
+      <p>
+        A model predictive controller plans seven days ahead, solves a linear program each day, and
+        executes only the first move before re-planning tomorrow with new information.
+      </p>
+      <p>
+        The uncertainty curve it is charged for is built from the <i>same</i> fused model-order weights
+        that produced the forecast &mdash; one object, two uses. That is the loop, and it is why position
+        size shrinks exactly when the filter is least sure.
+      </p>
+    </div>
+  </div>
+
+  <div style="margin-top:30px">
+    <div class="objective">
+      maximise &nbsp; &Sigma;<sub>l</sub> [ &Delta;p<sub>l</sub> &middot; u<sub>l</sub> &nbsp;&minus;&nbsp; <span class="hl">&lambda; &middot; &sigma;<sub>l</sub> &middot; |u<sub>l</sub>|</span> ]<br>
+      subject to &nbsp; &Sigma;<sub>l</sub> u<sub>l</sub> = &minus;u<sub>0</sub> ,&nbsp;&nbsp; |u<sub>l</sub>| &le; &beta; &middot; V / p<sub>l</sub>
+    </div>
+    <ul class="gloss">
+      <li><code>&Delta;p_l</code><span>predicted price change <i>l</i> days out, from the filter</span></li>
+      <li><code>&sigma;_l</code><span>how unsure the filter is about day <i>l</i> &mdash; from the same fused model, and it grows with <i>l</i></span></li>
+      <li><code>&lambda;&middot;&sigma;_l&middot;|u_l|</code><span>a toll on every share traded, priced by the model&rsquo;s own uncertainty</span></li>
+      <li><code>&Sigma; u_l = &minus;u_0</code><span>the plan must return to flat &mdash; no runaway accumulation</span></li>
+      <li><code>&beta; = 0.5</code><span>largest single move allowed, as a fraction of that stock&rsquo;s equity</span></li>
+    </ul>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ======================== 6 · RESULTS ======================== -->
+<div class="body-text">
+  <h2>Results</h2>
+
+  <div class="duo">
+    <figure>
+      <img src="figures/fig_lambda_path.png" alt="Risk-return paths traced as the MPC risk weight lambda is varied.">
+      <figcaption><b>Turning the risk dial.</b> The path traced as &lambda; sweeps {0.05, 0.1, 0.3, 0.6}. Risk appetite is an explicit parameter, not an emergent property of a learned policy.</figcaption>
+    </figure>
+    <figure>
+      <img src="figures/Overall_Comparison.png" alt="Overall comparison across methods, panels and risk weights.">
+      <figcaption><b>Full sweep.</b> Every (panel, &lambda;, method) cell is reported rather than a single tuned operating point.</figcaption>
+    </figure>
+  </div>
+
+</div>
+
+<hr class="divider">
+
+<!-- ======================== 7 · CITATION ======================== -->
+<div class="body-text">
+  <h2 id="citation">Citation</h2>
+  <div class="citation">
+<pre><code>@misc{peng2026cast,
+  title        = {{CAST}: A Cross-Asset State-Space Trading System
+                  for Drawdown Control in Stock Markets},
+  author       = {Peng, Yu and Khushi, Matloob and Poon, Josiah},
+  year         = {2026},
+  eprint       = {2609.14205},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.CE},
+  doi          = {10.48550/arXiv.2609.14205},
+  url          = {https://arxiv.org/abs/2609.14205},
+  note         = {Accepted at IEEE International Conference on Data Mining (ICDM 2026)}
+}</code></pre>
+  </div>
+</div>
+
+<hr class="divider" style="max-width:none;width:100vw;margin-left:calc(-50vw + 50%);margin-right:calc(-50vw + 50%)">
+
+<div class="footer-note">
+  <p>
+    You&rsquo;ve reached the end.<br>
+    This website template is adopted from
+    <a href="https://thaoshibe.github.io/relsim/">relsim (CVPR 2026)</a>,
+    itself adopted from
+    <a href="https://thaoshibe.github.io/visii/#">visii (NeurIPS 2023)</a> and
+    <a href="https://dreamfusion3d.github.io/">DreamFusion (ICLR 2023)</a>.
+    Source code for relsim can be found
+    <a href="https://github.com/thaoshibe/thaoshibe.github.io/tree/main/relsim">here</a>. Thank you!
+  </p>
+  <p style="margin-bottom:0">
+    Yu Peng, Matloob Khushi, Josiah Poon &middot;
+    <a href="https://github.com/FanBroWell/CAST">github.com/FanBroWell/CAST</a>
+  </p>
+</div>
+
+</body>
+</html>
