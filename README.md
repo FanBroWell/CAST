@@ -14,22 +14,20 @@
 
 <table>
   <tr>
-    <td width="38%"><img src="./figures/fig_framework.png" alt="CAST framework: CKF/CoKF predictors feed an uncertainty-penalised MPC controller"></td>
+    <td width="32%"><img src="./figures/fig_framework.png" alt="CAST framework: CKF/CoKF predictors feed an uncertainty-penalised MPC controller"></td>
     <td>
       <a href="https://fanbrowell.github.io/CAST/"><b>A Cross-Asset State-Space Trading System for Drawdown Control in Stock Markets</b></a><br>
-      Accepted at <a href="https://icdm2026.neu.edu.cn/">IEEE ICDM 2026</a><br><br>
+      Accepted at <a href="https://icdm2026.neu.edu.cn/">IEEE ICDM 2026</a><br>
       <a href="https://ypeng.online/">Yu Peng</a><sup>1</sup>,
       <a href="https://www.brunel.ac.uk/people/matloob-khushi">Matloob Khushi</a><sup>2</sup>,
-      <a href="https://www.sydney.edu.au/engineering/about/our-people/academic-staff/josiah-poon.html">Josiah Poon</a><sup>1</sup><br><br>
-      <sup>1</sup> The University of Sydney &nbsp;&nbsp; <sup>2</sup> Brunel University London<br><br>
+      <a href="https://www.sydney.edu.au/engineering/about/our-people/academic-staff/josiah-poon.html">Josiah Poon</a><sup>1</sup><br>
+      <sup>1</sup> The University of Sydney &nbsp;&nbsp; <sup>2</sup> Brunel University London<br>
       <a href="https://arxiv.org/abs/2609.14205">arXiv:2609.14205</a> &nbsp;|&nbsp;
       <a href="https://arxiv.org/pdf/2609.14205">PDF</a> &nbsp;|&nbsp;
       <a href="https://fanbrowell.github.io/CAST/">Project Page</a>
     </td>
   </tr>
 </table>
-
-> **TL;DR:** A forecasting model knows how unsure it is — the step that decides *how much to bet* almost never asks. CAST closes that loop: the filter's own uncertainty **is** the risk term inside the controller that sizes the trade. Training-free, gradient-free, CPU only.
 
 <details>
 <summary>Click here to read the <b>abstract 📝</b></summary>
