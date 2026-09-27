@@ -14,7 +14,7 @@
 
 <table>
   <tr>
-    <td width="46%"><img src="./figures/fig_equity.png" alt="CAST equity curves, 2010-2025"></td>
+    <td width="38%"><img src="./figures/fig_framework.png" alt="CAST framework: CKF/CoKF predictors feed an uncertainty-penalised MPC controller"></td>
     <td>
       <a href="https://fanbrowell.github.io/CAST/"><b>A Cross-Asset State-Space Trading System for Drawdown Control in Stock Markets</b></a><br>
       Accepted at <a href="https://icdm2026.neu.edu.cn/">IEEE ICDM 2026</a><br><br>
@@ -32,14 +32,10 @@
 > **TL;DR:** A forecasting model knows how unsure it is — the step that decides *how much to bet* almost never asks. CAST closes that loop: the filter's own uncertainty **is** the risk term inside the controller that sizes the trade. Training-free, gradient-free, CPU only.
 
 <details>
-<summary>Click here to read the <b>method summary 📝</b></summary>
+<summary>Click here to read the <b>abstract 📝</b></summary>
 <br>
-CAST is a modular and interpretable trading system designed for drawdown control in stock markets. It consists of two components:
 
-* **CoKF**: a Cross-Asset Collaborative Kalman Filter that estimates each asset's latent state online, couples assets through cross-asset correlations, and adaptively fuses multiple integrated-random-walk orders.
-* **MPC**: a Model Predictive Control module that converts forecasts into trading decisions using forecast uncertainty as an explicit risk penalty.
-
-Filter parameters are calibrated on pre-2010 data and held fixed across the 2010&ndash;2025 test window, over four panels of thirty daily-close stocks (NASDAQ, CSI&nbsp;300, TPX100, Global30).
+Managing drawdown, the peak-to-trough decline in an investment portfolio's value, is a precondition for long-term survival in practical investment management. However, mainstream stock forecasting methods predominantly optimize returns or Sharpe ratios under the independent and identically distributed (i.i.d.) assumption. Real markets do not follow this assumption, triggering catastrophic drawdowns. We propose a cross-asset state-space trading system (CAST), consisting of two components: The predictor, Cross-Asset Collaborative Kalman Filter (CoKF), estimates each asset's latent state online, coupling all assets through their correlations and adaptively fusing multiple integrated-random-walk orders. The controller, Model Predictive Control (MPC), converts the predictor's forecast into trades, using forecast uncertainty as an explicit risk penalty that controls drawdown. We evaluate CAST on four real-world stock markets over a 15-year test window and show that it consistently occupies the return&ndash;drawdown Pareto frontier, achieving strong risk-adjusted performance while maintaining substantially lower maximum drawdown than competitive baselines. A stress test across crisis periods further demonstrates robust behavior under market shocks and distribution shift. Because the predictor and controller interact only through the predicted price path, both are plug-and-play, making CAST a modular, interpretable trading system.
 </details>
 
 ---
