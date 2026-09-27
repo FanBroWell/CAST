@@ -4,6 +4,7 @@
   <a href="https://arxiv.org/abs/2609.14205"><img src="https://img.shields.io/badge/arXiv-2609.14205-b31b1b?logo=arxiv&logoColor=white" alt="arXiv"></a>
   <a href="https://arxiv.org/pdf/2609.14205"><img src="https://img.shields.io/badge/Paper-PDF-b31b1b" alt="PDF"></a>
   <a href="https://fanbrowell.github.io/CAST/"><img src="https://img.shields.io/badge/Project_Page-up-2ea44f" alt="Project Page"></a>
+  <a href="https://huggingface.co/datasets/CharlieYPeng/CAST-stock-panels"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Datasets-CAST--stock--panels-ffcc4d" alt="Hugging Face Datasets"></a>
   <a href="https://icdm2026.neu.edu.cn/"><img src="https://img.shields.io/badge/IEEE_ICDM-2026-00629B" alt="ICDM 2026"></a>
   <a href="#citation"><img src="https://img.shields.io/badge/BibTeX-Citation-blue" alt="BibTeX"></a>
   <a href="./LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue" alt="License"></a>
@@ -87,6 +88,13 @@ Four panels of 30 daily-close stocks, January 2005 to April 2025:
 | Global30 | Cross-currency basket      |
 
 Each panel is one `.parquet` (prices) + one `.json` (tickers). 
+
+The same panels are on Hugging Face as [CharlieYPeng/CAST-stock-panels](https://huggingface.co/datasets/CharlieYPeng/CAST-stock-panels):
+
+```python
+from datasets import load_dataset
+ds = load_dataset("CharlieYPeng/CAST-stock-panels", "NASDAQ", split="train")  # or CSI300, TPX100, Global30
+```
 
 Global30 prices (different currencies) are normalized to the first-day value before backtesting, while the other three datasets use raw prices.
 
