@@ -14,7 +14,7 @@
 
 <table>
   <tr>
-    <td width="32%"><img src="./figures/fig_framework.png" alt="CAST framework: CKF/CoKF predictors feed an uncertainty-penalised MPC controller"></td>
+    <td width="32%"><img src="./figures/fig_ltcm.png" alt="Annual investor returns of Long-Term Capital, 1995-1998 (source: Long-Term Capital / The New York Times)"></td>
     <td>
       <a href="https://fanbrowell.github.io/CAST/"><b>A Cross-Asset State-Space Trading System for Drawdown Control in Stock Markets</b></a><br>
       Accepted at <a href="https://icdm2026.neu.edu.cn/">IEEE ICDM 2026</a><br>
