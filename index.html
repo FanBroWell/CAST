@@ -58,23 +58,10 @@ a:hover{color:#08507f}
 
 /* ---------- title block ---------- */
 h1.title{
-  font-size:clamp(84px,15vw,156px);font-weight:700;letter-spacing:-.045em;
-  margin:0 0 22px;display:flex;align-items:center;justify-content:center;gap:.005em;
-  line-height:1;color:#2b2e31;
+  font-size:clamp(28px,4.4vw,42px);font-weight:300;line-height:1.22;letter-spacing:-.012em;
+  color:#313437;margin:0 0 22px;
 }
-h1.title .bull{
-  height:.96em;width:auto;display:block;position:relative;top:.02em;
-  margin:0 -.02em;overflow:visible;
-}
-h1.title .ring{transform-box:fill-box;transform-origin:50% 0}
-h1.title:hover .ring{animation:ring-swing .9s ease-in-out}
-@keyframes ring-swing{
-  0%{transform:rotate(0)}25%{transform:rotate(16deg)}50%{transform:rotate(-11deg)}
-  75%{transform:rotate(5deg)}100%{transform:rotate(0)}
-}
-.subtitle{font-size:clamp(22px,3.3vw,33px);font-weight:300;line-height:1.26;
-  color:#313437;margin:0 0 18px;letter-spacing:-.012em}
-.subtitle b{font-weight:700;color:#2b2e31}
+h1.title b{font-weight:700;color:#1f2224}
 .venue{font-size:clamp(17px,2.2vw,21px);font-weight:300;color:#5c6266;margin:0 0 22px}
 .venue .rule{color:#c6cacd}
 .authors{font-size:clamp(17px,2.2vw,21px);font-weight:400;line-height:1.6;margin:0 0 6px}
@@ -174,8 +161,6 @@ pre{font-family:'Source Code Pro',monospace;font-size:13.5px;line-height:1.75;
   color:gray;font-size:90%}
 
 @media (max-width:600px){
-  h1.title{letter-spacing:-.03em}
-  .subtitle{font-size:21px}
   .lead-line{font-size:20px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -236,14 +221,7 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
 <!-- ======================== TITLE ======================== -->
 <div class="highlight-clean">
   <div class="container" style="max-width: 860px;">
-    <h1 class="title text-center">C<svg class="bull" viewBox="0 0 120 112" role="img" aria-label="A">
-      <title>A — bull head with a nose ring</title>
-      <path d="M36 46 C22 40 13 28 11 13 C25 17 37 27 43 38" fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M84 46 C98 40 107 28 109 13 C95 17 83 27 77 38" fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M60 32 C44 32 37 41 37 52 C37 68 46 84 60 94 C74 84 83 68 83 52 C83 41 76 32 60 32 Z" fill="currentColor"/>
-      <ellipse class="ring" cx="60" cy="97" rx="12" ry="10" fill="none" stroke="#C33A1C" stroke-width="6"/>
-    </svg>ST</h1>
-    <p class="subtitle text-center">A <b>C</b>ross-<b>A</b>sset <b>S</b>tate-Space <b>T</b>rading System<br>for Drawdown Control in Stock Markets</p>
+    <h1 class="title text-center"><b>CAST</b>: A Cross-Asset State-Space Trading System<br>for Drawdown Control in Stock Markets</h1>
     <p class="venue text-center"><span class="rule">———</span> IEEE ICDM 2026 <i style="font-size:.85em">see you in Shenyang</i> <span class="rule">———</span></p>
 
     <p class="authors text-center">
@@ -317,27 +295,29 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
 <div class="body-text">
   <h2>Abstract</h2>
   <p class="lead-line" style="margin-bottom:18px">
-    A forecasting model knows how unsure it is. The step that decides <em>how much to bet</em> almost never asks.
+    Managing drawdown, the peak-to-trough decline in an investment portfolio&rsquo;s value, is
+    <em>a precondition for long-term survival</em> in practical investment management.
   </p>
   <p>
-    Most machine-learning trading pipelines run in two decoupled stages: a model predicts returns, then a
-    heuristic &mdash; top-<i>k</i>, equal weight, a fixed volatility target &mdash; turns those predictions
-    into positions. The model&rsquo;s own uncertainty is discarded at exactly the moment it would be most useful.
+    However, mainstream stock forecasting methods predominantly optimize returns or Sharpe ratios under the
+    independent and identically distributed (i.i.d.) assumption. Real markets do not follow this assumption,
+    triggering catastrophic drawdowns.
   </p>
   <p>
-    CAST closes that loop. A cross-asset collaborative Kalman filter estimates each stock&rsquo;s latent state
-    online, coupling thirty names through a correlation matrix fitted before 2010 and fusing three
-    integrated-random-walk orders by online Bayesian model averaging. A model predictive controller then
-    turns those forecasts into positions, and the uncertainty it is charged for is built from the
-    <i>same</i> fused weights that produced the forecast. Position size therefore shrinks exactly when the
-    filter is least sure, and drawdown control becomes the objective the system optimises rather than a
-    metric reported afterwards.
+    We propose a cross-asset state-space trading system (<b>CAST</b>), consisting of two components:
+    The predictor, <b>Cross-Asset Collaborative Kalman Filter (CoKF)</b>, estimates each asset&rsquo;s latent
+    state online, coupling all assets through their correlations and adaptively fusing multiple
+    integrated-random-walk orders. The controller, <b>Model Predictive Control (MPC)</b>, converts the
+    predictor&rsquo;s forecast into trades, using forecast uncertainty as an explicit risk penalty that
+    controls drawdown.
   </p>
   <p style="margin-bottom:0">
-    The system is training-free and gradient-free: no neural network, no gradients, CPU only. We evaluate
-    on four panels of thirty daily-close stocks &mdash; NASDAQ, CSI&nbsp;300, TPX100 and a cross-currency
-    basket &mdash; over fifteen unbroken years, with the filter parameters calibrated on pre-2010 data and
-    never refitted.
+    We evaluate CAST on four real-world stock markets over a 15-year test window and show that it consistently
+    occupies the return&ndash;drawdown Pareto frontier, achieving strong risk-adjusted performance while
+    maintaining substantially lower maximum drawdown than competitive baselines. A stress test across crisis
+    periods further demonstrates robust behavior under market shocks and distribution shift. Because the
+    predictor and controller interact only through the predicted price path, both are plug-and-play, making
+    CAST a modular, interpretable trading system.
   </p>
 </div>
 
@@ -394,13 +374,10 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
 <div class="body-text">
   <h2>Method</h2>
 
-  <!-- TO FILL: save the architecture diagram as figures/architecture.png, then
-       replace the <div class="slot slot-arch"> block below with:
-           <img src="figures/architecture.png" alt="CAST architecture: CoKF feeding the MPC loop"> -->
-  <div class="slot slot-arch" style="margin-bottom:30px">
-    <div class="t">Architecture diagram</div>
-    <div class="s">The CoKF &rarr; MPC loop, with &sigma; drawn as the feedback limb.</div>
-  </div>
+  <figure style="margin-bottom:30px">
+    <img src="figures/architecture.png" alt="CAST architecture: the CoKF predictor produces an L-step forecast and its uncertainty; the MPC controller trades only when the forecast outweighs the uncertainty">
+    <figcaption><b>CAST architecture.</b> The predictor (CoKF) outputs an L-step price forecast with a per-step uncertainty &omega;<sub>l</sub>; the controller (MPC) plans L trades, penalises each by &lambda;&middot;|u|&middot;&omega;<sub>l</sub>, and commits only the first one each day.</figcaption>
+  </figure>
 
   <div class="duo">
     <div>
