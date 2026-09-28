@@ -17,7 +17,7 @@
   <tr>
     <td width="32%"><img src="./figures/fig_ltcm_1998.jpg" alt="Annual investor returns of Long-Term Capital, 1995-1998 (source: Long-Term Capital / The New York Times)"></td>
     <td>
-      <a href="https://fanbrowell.github.io/CAST/"><b>A Cross-Asset State-Space Trading System for Drawdown Control in Stock Markets</b></a><br>
+      <a href="https://arxiv.org/abs/2609.14205"><b>A Cross-Asset State-Space Trading System for Drawdown Control in Stock Markets</b></a><br>
       Accepted at <a href="https://icdm2026.neu.edu.cn/">IEEE ICDM 2026</a><br>
       <a href="https://ypeng.online/">Yu Peng</a><sup>1</sup>,
       <a href="https://www.brunel.ac.uk/people/matloob-khushi">Matloob Khushi</a><sup>2</sup>,
