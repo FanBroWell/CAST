@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&family=Source+Code+Pro:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&family=Source+Code+Pro:wght@400;600&display=swap">
 
 <style>
 /* ------------------------------------------------------------------
@@ -58,16 +58,23 @@ a:hover{color:#08507f}
 
 /* ---------- title block ---------- */
 h1.title{
-  font-size:clamp(58px,11vw,104px);font-weight:600;letter-spacing:-.035em;
-  margin:0 0 6px;display:flex;align-items:center;justify-content:center;gap:.01em;
-  line-height:1;
+  font-size:clamp(84px,15vw,156px);font-weight:700;letter-spacing:-.045em;
+  margin:0 0 22px;display:flex;align-items:center;justify-content:center;gap:.005em;
+  line-height:1;color:#2b2e31;
 }
 h1.title .bull{
-  height:.92em;width:auto;display:block;position:relative;top:.03em;
-  margin:0 -.015em;
+  height:.96em;width:auto;display:block;position:relative;top:.02em;
+  margin:0 -.02em;overflow:visible;
 }
-.subtitle{font-size:clamp(22px,3.4vw,32px);font-weight:300;line-height:1.24;
+h1.title .ring{transform-box:fill-box;transform-origin:50% 0}
+h1.title:hover .ring{animation:ring-swing .9s ease-in-out}
+@keyframes ring-swing{
+  0%{transform:rotate(0)}25%{transform:rotate(16deg)}50%{transform:rotate(-11deg)}
+  75%{transform:rotate(5deg)}100%{transform:rotate(0)}
+}
+.subtitle{font-size:clamp(22px,3.3vw,33px);font-weight:300;line-height:1.26;
   color:#313437;margin:0 0 18px;letter-spacing:-.012em}
+.subtitle b{font-weight:700;color:#2b2e31}
 .venue{font-size:clamp(17px,2.2vw,21px);font-weight:300;color:#5c6266;margin:0 0 22px}
 .venue .rule{color:#c6cacd}
 .authors{font-size:clamp(17px,2.2vw,21px);font-weight:400;line-height:1.6;margin:0 0 6px}
@@ -234,9 +241,9 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
       <path d="M36 46 C22 40 13 28 11 13 C25 17 37 27 43 38" fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M84 46 C98 40 107 28 109 13 C95 17 83 27 77 38" fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M60 32 C44 32 37 41 37 52 C37 68 46 84 60 94 C74 84 83 68 83 52 C83 41 76 32 60 32 Z" fill="currentColor"/>
-      <ellipse cx="60" cy="97" rx="12" ry="10" fill="none" stroke="#C33A1C" stroke-width="6"/>
+      <ellipse class="ring" cx="60" cy="97" rx="12" ry="10" fill="none" stroke="#C33A1C" stroke-width="6"/>
     </svg>ST</h1>
-    <p class="subtitle text-center">A Cross-Asset State-Space Trading System<br>for Drawdown Control in Stock Markets</p>
+    <p class="subtitle text-center">A <b>C</b>ross-<b>A</b>sset <b>S</b>tate-Space <b>T</b>rading System<br>for Drawdown Control in Stock Markets</p>
     <p class="venue text-center"><span class="rule">———</span> IEEE ICDM 2026 <i style="font-size:.85em">see you in Shenyang</i> <span class="rule">———</span></p>
 
     <p class="authors text-center">
