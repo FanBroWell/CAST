@@ -41,7 +41,7 @@ body{
   color:#313437;
   background-color:#fff;
   margin:0;
-  font-size:17px;
+  font-size:18px;
   line-height:1.6;
 }
 h1,h2,h3,h4,h5,h6{
@@ -49,7 +49,7 @@ h1,h2,h3,h4,h5,h6{
   font-weight:300;line-height:1.1;color:inherit;
 }
 .highlight-clean{color:#313437;background-color:#fff;padding:58px 0 14px}
-.divider{max-width:768px;margin-top:46px;margin-bottom:46px;border-top-color:rgba(0,0,0,.07)}
+.divider{width:calc(100% - 40px);max-width:880px;margin-top:46px;margin-bottom:46px;border-top-color:rgba(0,0,0,.07)}
 .btn:hover{opacity:1}
 .btn:active{transform:translateY(1px)}
 .btn-light.disabled{background-color:#ccc}
@@ -61,9 +61,10 @@ h1.title{
   font-size:clamp(24px,3.9vw,38px);font-weight:300;line-height:1.25;letter-spacing:-.012em;
   color:#313437;margin:0 0 24px;
 }
-h1.title span{display:block}
+h1.title span{display:block;text-wrap:balance}
+h1.title .nw{font-style:normal;white-space:nowrap}
 h1.title .name{
-  font-size:clamp(68px,11vw,112px);font-weight:700;letter-spacing:-.035em;line-height:1;
+  font-size:clamp(68px,11vw,112px);font-weight:700;letter-spacing:.24em;padding-left:.24em;line-height:1;
   color:#1f2224;margin-bottom:.22em;
 }
 .venue{font-size:clamp(17px,2.2vw,21px);font-weight:300;color:#5c6266;margin:0 0 22px}
@@ -76,7 +77,7 @@ h1.title .name{
 .affil sup{font-size:.72em;margin-right:2px}
 
 /* ---------- hero slot (first screen) ---------- */
-.hero-slot{max-width:900px;margin:0 auto}
+.hero-slot{max-width:880px;margin:0 auto}
 .hero-slot img{display:block;width:100%;height:auto;border-radius:4px}
 .hero-ph{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -101,37 +102,37 @@ h1.title .name{
 .bibtex-mark .sc{font-size:12px;text-transform:uppercase}
 
 /* ---------- content ---------- */
-.body-text{max-width:768px;margin:0 auto;text-align:left}
+.body-text{max-width:920px;margin:0 auto;padding:0 20px;box-sizing:border-box;text-align:left}
 .body-text h2{
-  font-size:15px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
-  color:#9aa0a5;margin:0 0 20px;text-align:left;position:relative;padding-top:14px;
+  font-size:clamp(28px,calc(2.2vw + 14px),34px);font-weight:600;letter-spacing:-.012em;line-height:1.15;
+  color:#1f2224;margin:0 0 16px;text-align:left;position:relative;padding-top:20px;
 }
 .body-text h2::before{
-  content:"";position:absolute;top:0;left:0;width:26px;height:3px;
+  content:"";position:absolute;top:0;left:0;width:40px;height:4px;
   background:#C33A1C;border-radius:2px;
 }
-.body-text h3{font-size:21px;font-weight:600;margin:0 0 6px;letter-spacing:-.01em}
+.body-text h3{font-size:24px;font-weight:600;margin:0 0 8px;letter-spacing:-.01em}
 .body-text p{margin:0 0 16px}
 .body-text p:last-child{margin-bottom:0}
-.lead-line{font-size:23px;font-weight:300;line-height:1.45;color:#313437}
+.lead-line{font-size:clamp(21px,2.6vw,26px);font-weight:300;line-height:1.45;color:#313437}
 .lead-line em{font-style:normal;color:#C33A1C;font-weight:400}
 .lead-line strong{color:#C33A1C;font-weight:700}
 /* ---------- dataset stats ---------- */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0 0 22px}
 @media (max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}}
-.stat .n{display:block;font-size:40px;font-weight:700;line-height:1;letter-spacing:-.03em;color:#1f2224;
+.stat .n{display:block;font-size:42px;font-weight:700;line-height:1;letter-spacing:-.03em;color:#1f2224;
   font-variant-numeric:tabular-nums}
 .stat .n small{font-size:.45em;font-weight:600;color:#C33A1C;letter-spacing:0;margin-left:2px}
-.stat .u{display:block;font-size:14px;line-height:1.4;color:#7d8285;margin-top:6px}
+.stat .u{display:block;font-size:15px;line-height:1.4;color:#7d8285;margin-top:6px}
 /* ---------- results table ---------- */
 .tbl{overflow-x:auto;margin:0 0 10px;-webkit-overflow-scrolling:touch}
-.tbl table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px;
+.tbl table{border-collapse:collapse;width:100%;min-width:640px;font-size:15px;
   font-variant-numeric:tabular-nums;color:#313437}
 .tbl th,.tbl td{padding:6px 8px;text-align:right;white-space:nowrap}
 .tbl th:first-child,.tbl td:first-child{text-align:left}
 .tbl thead tr:first-child{border-top:1.5px solid #313437}
 .tbl thead tr:first-child th{font-weight:600;border-bottom:1px solid #d7dadd;text-align:center}
-.tbl thead tr:last-child th{font-weight:400;color:#7d8285;font-size:12.5px;border-bottom:1.5px solid #313437}
+.tbl thead tr:last-child th{font-weight:400;color:#7d8285;font-size:13.5px;border-bottom:1.5px solid #313437}
 .tbl tbody tr.grp td{border-top:1px solid #d7dadd}
 .tbl tbody tr:last-child td{border-bottom:1.5px solid #313437}
 .tbl .gap{border-left:1px solid #eceef0}
@@ -144,7 +145,7 @@ h1.title .name{
 
 figure{margin:0}
 figure img{display:block;width:100%;height:auto;border:1px solid #e6e8ea;border-radius:3px;background:#fff}
-figcaption{font-size:14px;line-height:1.5;color:#7d8285;margin-top:10px;text-align:left}
+figcaption{font-size:15px;line-height:1.55;color:#686d71;margin-top:10px;text-align:left;max-width:760px}
 figcaption b{color:#313437;font-weight:600}
 
 .duo{display:flex;flex-wrap:wrap;gap:30px}
@@ -152,19 +153,14 @@ figcaption b{color:#313437;font-weight:600}
 .tagline{font-family:'Source Code Pro',monospace;font-size:12px;letter-spacing:.08em;
   color:#C33A1C;display:block;margin-bottom:2px}
 
-.objective{
-  font-family:'Source Code Pro',monospace;font-size:15px;line-height:1.95;
-  background:#f8f9fa;border:1px solid #e6e8ea;border-radius:4px;
-  padding:18px 20px;overflow-x:auto;margin:0 0 16px;text-align:left;
-}
-.objective .hl{color:#C33A1C}
-.gloss{list-style:none;padding:0;margin:0}
-.gloss li{display:flex;gap:12px;align-items:baseline;font-size:15.5px;line-height:1.5;margin-bottom:8px}
-.gloss code{font-family:'Source Code Pro',monospace;font-size:13.5px;color:#C33A1C;white-space:nowrap;background:none;padding:0}
 
-.tl-bar{display:flex;height:34px;border:1px solid #e6e8ea;border-radius:3px;overflow:hidden;
+.tl-bar{display:flex;min-height:34px;border:1px solid #e6e8ea;border-radius:3px;overflow:hidden;
   font-family:'Source Code Pro',monospace;font-size:12px;letter-spacing:.04em;margin-bottom:8px}
-.tl-bar div{display:flex;align-items:center;justify-content:center;text-align:center;padding:0 8px}
+.tl-bar div{display:flex;align-items:center;justify-content:center;text-align:center;padding:6px 10px;line-height:1.35}
+@media (max-width:760px){
+  .tl-bar{flex-direction:column}
+  .tl-test{border-left:0!important;border-top:1px solid #e6e8ea}
+}
 .tl-cal{flex:1;background:#f6e3dd;color:#C33A1C}
 .tl-test{flex:3;background:#f8f9fa;color:#7d8285;border-left:1px solid #e6e8ea}
 .tl-ends{display:flex;justify-content:space-between;font-family:'Source Code Pro',monospace;
@@ -181,17 +177,17 @@ figcaption b{color:#313437;font-weight:600}
   line-height:1.55;color:#7d8285;margin:22px 0 0}
 .caveat b{color:#313437;font-weight:600}
 
-pre{font-family:'Source Code Pro',monospace;font-size:13.5px;line-height:1.75;
+pre{font-family:'Source Code Pro',monospace;font-size:13px;line-height:1.75;
   background:#f8f9fa;border:1px solid #e6e8ea;border-radius:4px;padding:16px 18px;
   overflow-x:auto;margin:0;text-align:left;color:#313437}
 .cmd{color:#C33A1C}
 .citation{font-family:'Source Code Pro',monospace;font-size:12.5px;text-align:left}
 
-.footer-note{max-width:768px;margin:0 auto;padding-bottom:30px;text-align:left;
+.footer-note{max-width:920px;margin:0 auto;padding:0 20px 30px;box-sizing:border-box;text-align:left;
   color:gray;font-size:90%}
 
-@media (max-width:600px){
-  .lead-line{font-size:20px}
+@media (max-width:820px){
+  .body-text h3{font-size:21px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
@@ -229,8 +225,8 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
   letter-spacing:.11em;text-transform:uppercase;color:#C33A1C;display:block;margin-bottom:7px}
 .panel .nm{font-size:20px;font-weight:600;letter-spacing:-.015em;color:#313437;
   display:block;line-height:1.15;margin-bottom:5px}
-.panel .ds{font-size:14px;line-height:1.45;color:#7d8285}
-.panel-note{font-size:15px;color:#7d8285;margin:0}
+.panel .ds{display:block;font-size:14px;line-height:1.45;color:#7d8285}
+.panel-note{font-size:16px;color:#686d71;margin:0;max-width:800px}
 .panel-note b{color:#313437;font-weight:600}
 
 /* ---------- generic drop-in slot ---------- */
@@ -250,8 +246,8 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
 
 <!-- ======================== TITLE ======================== -->
 <div class="highlight-clean">
-  <div class="container" style="max-width: 860px;">
-    <h1 class="title text-center"><span class="name">CAST</span><span>A Cross-Asset State-Space Trading System</span><span>for Drawdown Control in Stock Markets</span></h1>
+  <div class="container" style="max-width: 860px;padding-left:20px;padding-right:20px;">
+    <h1 class="title text-center"><span class="name">CAST</span><span>A <i class="nw">Cross-Asset</i> <i class="nw">State-Space</i> Trading System</span><span>for Drawdown Control in Stock Markets</span></h1>
     <p class="venue text-center"><span class="rule">———</span> IEEE ICDM 2026 <i style="font-size:.85em">see you in Shenyang</i> <span class="rule">———</span></p>
 
     <p class="authors text-center">
@@ -306,7 +302,7 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
 <!-- Save your hero image as figures/teaser.png, then replace the whole
      <div class="slot slot-hero">…</div> block with:
          <img src="figures/teaser.png" alt="…">                          -->
-<div class="container" style="max-width: 920px;">
+<div class="container" style="max-width: 920px;padding-left:20px;padding-right:20px;">
   <!-- TO FILL: save the hero graphic as figures/teaser.png, then replace the
        whole <div class="slot slot-hero"> block below with:
            <img src="figures/teaser.png" alt="...">
@@ -388,7 +384,7 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
     <div class="panel">
       <span class="flag">Japan</span>
       <span class="nm">TPX100</span>
-      <span class="ds">Tokyo Stock Exchange blue-chips</span>
+      <span class="ds">Tokyo Stock Exchange <span style="white-space:nowrap">blue-chips</span></span>
     </div>
     <div class="panel">
       <span class="flag">Cross-currency</span>
@@ -447,9 +443,9 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
     <div>
       <h3><span class="tagline">Controller</span>MPC</h3>
       <p>
-        One risk-isolated controller per asset. On a receding horizon it plans the trade sequence
+        One risk-isolated controller per asset. On a receding horizon of <i>L</i>&nbsp;=&nbsp;7 trading days it plans the trade sequence
         u<sub>k+1</sub>,&nbsp;&hellip;,&nbsp;u<sub>k+L&minus;1</sub> that maximises predicted horizon profit,
-        executes only the first trade, and re-plans at the next close with fresh prices.
+        executes only the first trade, and re-plans at the next close with fresh prices. No single trade may exceed half of the account value (&beta;&nbsp;=&nbsp;0.5).
       </p>
       <p>
         <b>Uncertainty as risk.</b> The penalty weight &omega;<sub>l</sub> is the <i>l</i>-step forecast standard
@@ -462,20 +458,6 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
     </div>
   </div>
 
-  <div style="margin-top:30px">
-    <div class="objective">
-      max<sub>u</sub> &nbsp; &Sigma;<sub>l=1</sub><sup>L&minus;1</sup> u<sub>k+l</sub> &Delta;P&#772;<sub>k+l|k</sub> &nbsp;&minus;&nbsp; <span class="hl">&lambda; &Sigma;<sub>l=1</sub><sup>L&minus;1</sup> |u<sub>k+l</sub>| &omega;<sub>l</sub></span><br>
-      s.t. &nbsp;&nbsp;&nbsp;&nbsp; &Sigma;<sub>l</sub> u<sub>k+l</sub> = &minus;u<sub>k</sub> ,&nbsp;&nbsp; |u<sub>k+l</sub>| P<sub>k+l</sub> &le; &beta; V<sub>k</sub>
-    </div>
-    <ul class="gloss">
-      <li><code>&Delta;P&#772;<sub>k+l|k</sub></code><span>predicted price change <i>l</i> days out, from the CoKF forecast</span></li>
-      <li><code>&omega;<sub>l</sub></code><span><i>l</i>-step forecast standard deviation &mdash; grows with the filter&rsquo;s uncertainty</span></li>
-      <li><code>&lambda;&middot;|u|&middot;&omega;<sub>l</sub></code><span>a toll on every share traded, priced by the model&rsquo;s own uncertainty</span></li>
-      <li><code>&Sigma; u = &minus;u<sub>k</sub></code><span>unwind the current position by the end of the horizon</span></li>
-      <li><code>&beta; = 0.5</code><span>no single trade exceeds 50% of account value</span></li>
-      <li><code>L = 7</code><span>planning horizon in trading days</span></li>
-    </ul>
-  </div>
 </div>
 
 <hr class="divider">
@@ -485,7 +467,7 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
   <h2>Results</h2>
 
   <figure>
-    <img src="figures/Overall_Comparison.png" alt="Table II: comparison of CKF and CAST with 15 baselines on NASDAQ, CSI300, TPX100 and Global30">
+    <a href="figures/Overall_Comparison.png" title="Open full-size table"><img src="figures/Overall_Comparison.png" alt="Table II: comparison of CKF and CAST with 15 baselines on NASDAQ, CSI300, TPX100 and Global30"></a>
     <figcaption><b>Main results (Table II).</b> CKF and CAST against 15 baselines &mdash; Transformer, Linear/MLP,
       financial, distribution-shift-adaptation and SOTA stock forecasters &mdash; on all four markets. FV: final value
       from $1000; MDD: maximum drawdown (lower is better); CR, ASR, SoR: Calmar, annualized Sharpe and Sortino ratios
@@ -542,7 +524,7 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
   </div>
 </div>
 
-<hr class="divider" style="max-width:none;width:100vw;margin-left:calc(-50vw + 50%);margin-right:calc(-50vw + 50%)">
+<hr class="divider" style="max-width:none;width:auto;margin-left:0;margin-right:0">
 
 <div class="footer-note">
   <p>
