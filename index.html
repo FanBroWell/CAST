@@ -58,10 +58,14 @@ a:hover{color:#08507f}
 
 /* ---------- title block ---------- */
 h1.title{
-  font-size:clamp(28px,4.4vw,42px);font-weight:300;line-height:1.22;letter-spacing:-.012em;
-  color:#313437;margin:0 0 22px;
+  font-size:clamp(24px,3.9vw,38px);font-weight:300;line-height:1.25;letter-spacing:-.012em;
+  color:#313437;margin:0 0 24px;
 }
-h1.title b{font-weight:700;color:#1f2224}
+h1.title span{display:block}
+h1.title .name{
+  font-size:clamp(68px,11vw,112px);font-weight:700;letter-spacing:-.035em;line-height:1;
+  color:#1f2224;margin-bottom:.22em;
+}
 .venue{font-size:clamp(17px,2.2vw,21px);font-weight:300;color:#5c6266;margin:0 0 22px}
 .venue .rule{color:#c6cacd}
 .authors{font-size:clamp(17px,2.2vw,21px);font-weight:400;line-height:1.6;margin:0 0 6px}
@@ -111,6 +115,32 @@ h1.title b{font-weight:700;color:#1f2224}
 .body-text p:last-child{margin-bottom:0}
 .lead-line{font-size:23px;font-weight:300;line-height:1.45;color:#313437}
 .lead-line em{font-style:normal;color:#C33A1C;font-weight:400}
+.lead-line strong{color:#C33A1C;font-weight:700}
+/* ---------- dataset stats ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0 0 22px}
+@media (max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat .n{display:block;font-size:40px;font-weight:700;line-height:1;letter-spacing:-.03em;color:#1f2224;
+  font-variant-numeric:tabular-nums}
+.stat .n small{font-size:.45em;font-weight:600;color:#C33A1C;letter-spacing:0;margin-left:2px}
+.stat .u{display:block;font-size:14px;line-height:1.4;color:#7d8285;margin-top:6px}
+/* ---------- results table ---------- */
+.tbl{overflow-x:auto;margin:0 0 10px;-webkit-overflow-scrolling:touch}
+.tbl table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px;
+  font-variant-numeric:tabular-nums;color:#313437}
+.tbl th,.tbl td{padding:6px 8px;text-align:right;white-space:nowrap}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl thead tr:first-child{border-top:1.5px solid #313437}
+.tbl thead tr:first-child th{font-weight:600;border-bottom:1px solid #d7dadd;text-align:center}
+.tbl thead tr:last-child th{font-weight:400;color:#7d8285;font-size:12.5px;border-bottom:1.5px solid #313437}
+.tbl tbody tr.grp td{border-top:1px solid #d7dadd}
+.tbl tbody tr:last-child td{border-bottom:1.5px solid #313437}
+.tbl .gap{border-left:1px solid #eceef0}
+.tbl tr.ours td{background:#fbf3f0}
+.tbl tr.ours td:first-child{font-weight:700;color:#1f2224}
+.tbl .b{font-weight:700;color:#C33A1C}
+.tbl .u{text-decoration:underline;text-underline-offset:3px}
+.sup-tag{font-family:'Source Code Pro',monospace;font-size:12px;letter-spacing:.08em;color:#C33A1C;
+  text-transform:uppercase;display:block;margin:0 0 4px}
 
 figure{margin:0}
 figure img{display:block;width:100%;height:auto;border:1px solid #e6e8ea;border-radius:3px;background:#fff}
@@ -221,7 +251,7 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
 <!-- ======================== TITLE ======================== -->
 <div class="highlight-clean">
   <div class="container" style="max-width: 860px;">
-    <h1 class="title text-center"><b>CAST</b>: A Cross-Asset State-Space Trading System<br>for Drawdown Control in Stock Markets</h1>
+    <h1 class="title text-center"><span class="name">CAST</span><span>A Cross-Asset State-Space Trading System</span><span>for Drawdown Control in Stock Markets</span></h1>
     <p class="venue text-center"><span class="rule">———</span> IEEE ICDM 2026 <i style="font-size:.85em">see you in Shenyang</i> <span class="rule">———</span></p>
 
     <p class="authors text-center">
@@ -294,14 +324,12 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
 <!-- ======================== 2 · ABSTRACT ======================== -->
 <div class="body-text">
   <h2>Abstract</h2>
-  <p class="lead-line" style="margin-bottom:18px">
+  <p class="lead-line" style="margin-bottom:20px">
     Managing drawdown, the peak-to-trough decline in an investment portfolio&rsquo;s value, is
-    <em>a precondition for long-term survival</em> in practical investment management.
-  </p>
-  <p>
-    However, mainstream stock forecasting methods predominantly optimize returns or Sharpe ratios under the
-    independent and identically distributed (i.i.d.) assumption. Real markets do not follow this assumption,
-    triggering catastrophic drawdowns.
+    <em>a precondition for long-term survival</em> in practical investment management. However, mainstream
+    stock forecasting methods predominantly optimize returns or Sharpe ratios under
+    <strong>the independent and identically distributed (i.i.d.) assumption</strong>. Real markets do not
+    follow this assumption, triggering catastrophic drawdowns.
   </p>
   <p>
     We propose a cross-asset state-space trading system (<b>CAST</b>), consisting of two components:
@@ -335,14 +363,22 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
   </div>
 </div>
 
+<hr class="divider">
+
 <!-- ======================== 4 · DATASETS ======================== -->
 <div class="body-text">
   <h2>Datasets</h2>
+  <div class="stats">
+    <div class="stat"><span class="n">4</span><span class="u">real-world stock markets</span></div>
+    <div class="stat"><span class="n">30</span><span class="u">stocks per panel, daily close</span></div>
+    <div class="stat"><span class="n">20<small>yrs</small></span><span class="u">of data, Jan 2005 &ndash; Apr 2025</span></div>
+    <div class="stat"><span class="n">15<small>yrs</small></span><span class="u">out-of-sample test window</span></div>
+  </div>
   <div class="panels">
     <div class="panel">
       <span class="flag">United States</span>
       <span class="nm">NASDAQ</span>
-      <span class="ds">Large-cap US equities</span>
+      <span class="ds">NASDAQ Composite constituents</span>
     </div>
     <div class="panel">
       <span class="flag">China</span>
@@ -352,19 +388,24 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
     <div class="panel">
       <span class="flag">Japan</span>
       <span class="nm">TPX100</span>
-      <span class="ds">Tokyo blue-chips</span>
+      <span class="ds">Tokyo Stock Exchange blue-chips</span>
     </div>
     <div class="panel">
       <span class="flag">Cross-currency</span>
       <span class="nm">Global30</span>
-      <span class="ds">Mixed-currency basket</span>
+      <span class="ds">Five currency zones: USD, EUR, JPY, GBP, CNY</span>
     </div>
   </div>
-  <p class="panel-note">
-    <b>Four panels of thirty daily-close stocks, January 2005 – April 2025.</b>
-    Each panel is one parquet file of prices plus a JSON ticker list. Global30 spans several
-    currencies, so its prices are normalised to their first-day value before backtesting; the other
-    three panels use raw prices.
+  <div class="tl-bar" role="img" aria-label="Sample segment January 2005 to January 2010; test segment January 2010 to April 2025">
+    <div class="tl-cal">2005&ndash;2010 &middot; calibrate</div>
+    <div class="tl-test">2010.01 &ndash; 2025.04 &middot; out-of-sample test, never refitted</div>
+  </div>
+  <p class="panel-note" style="margin-top:14px">
+    <b>The window spans three market crises</b> &mdash; the 2008 subprime crisis, the 2020 COVID-19 crash
+    and the 2022 rate-hike crash. Parameters are calibrated once on pre-2010 data and held fixed for the
+    whole test window; no method sees test data during calibration or training. Each panel is one parquet
+    file of prices plus a JSON ticker list. Global30 prices are normalised to their first-day value before
+    backtesting; the other three panels use raw prices.
   </p>
 </div>
 
@@ -376,48 +417,63 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
 
   <figure style="margin-bottom:30px">
     <img src="figures/architecture.png" alt="CAST architecture: the CoKF predictor produces an L-step forecast and its uncertainty; the MPC controller trades only when the forecast outweighs the uncertainty">
-    <figcaption><b>CAST architecture.</b> The predictor (CoKF) outputs an L-step price forecast with a per-step uncertainty &omega;<sub>l</sub>; the controller (MPC) plans L trades, penalises each by &lambda;&middot;|u|&middot;&omega;<sub>l</sub>, and commits only the first one each day.</figcaption>
+    <figcaption><b>Overall framework.</b> The predictor (CoKF) emits an <i>L</i>-step price forecast
+      P&#772;<sub>k+l|k</sub> together with its forecast uncertainty &omega;<sub>l</sub>; the controller (MPC) plans the whole
+      trade sequence, charges every trade &lambda;&middot;|u|&middot;&omega;<sub>l</sub>, and commits only u<sub>k+1</sub> before
+      re-planning at the next close. The two modules meet only at the predicted price path, so either is plug-and-play.</figcaption>
   </figure>
 
   <div class="duo">
     <div>
-      <h3><span class="tagline">Estimator</span>CoKF</h3>
+      <h3><span class="tagline">Predictor</span>CoKF</h3>
       <p>
-        A cross-asset collaborative Kalman filter estimates each stock&rsquo;s latent state online. Thirty
-        stocks share one joint state, coupled through a correlation matrix fitted before 2010, so a move
-        in one name corrects the estimates of the others.
+        Each close price is treated as a noisy reading of a hidden intrinsic value, tracked by a Kalman
+        filter. It updates recursively from the latest price &mdash; no retraining, constant cost per step &mdash;
+        and its error covariance reports how uncertain it is.
       </p>
       <p>
-        Three integrated-random-walk orders &mdash; level, trend, curvature &mdash; run in parallel as
-        competing hypotheses about how smooth a trend is. Their weights are re-estimated every day, per
-        stock, by online Bayesian model averaging over how well each predicted the last seven days.
+        <b>Multi-order.</b> Integrated-random-walk filters of order <i>r</i>&nbsp;=&nbsp;1,&nbsp;2,&nbsp;3 (constant,
+        linear and parabolic local paths) run in parallel. Each is scored by its recent <i>L</i>-step error, and a
+        closed-form credibility weight &mu; shifts trust between orders every day, so the model adapts to regime
+        shifts online.
+      </p>
+      <p>
+        <b>Cross-asset.</b> All assets share one joint filter coupled through the process-noise covariance
+        <i>Q</i>, whose off-diagonals are &rho;<sub>ij</sub>&sigma;<sub>v</sub><sup>(i)</sup>&sigma;<sub>v</sub><sup>(j)</sup>:
+        shared market shocks move the latent dynamics, not idiosyncratic measurements. With &rho;&nbsp;=&nbsp;I it
+        reduces exactly to independent per-asset filters.
       </p>
     </div>
     <div>
       <h3><span class="tagline">Controller</span>MPC</h3>
       <p>
-        A model predictive controller plans seven days ahead, solves a linear program each day, and
-        executes only the first move before re-planning tomorrow with new information.
+        One risk-isolated controller per asset. On a receding horizon it plans the trade sequence
+        u<sub>k+1</sub>,&nbsp;&hellip;,&nbsp;u<sub>k+L&minus;1</sub> that maximises predicted horizon profit,
+        executes only the first trade, and re-plans at the next close with fresh prices.
       </p>
       <p>
-        The uncertainty curve it is charged for is built from the <i>same</i> fused model-order weights
-        that produced the forecast &mdash; one object, two uses. That is the loop, and it is why position
-        size shrinks exactly when the filter is least sure.
+        <b>Uncertainty as risk.</b> The penalty weight &omega;<sub>l</sub> is the <i>l</i>-step forecast standard
+        deviation, built from the <i>same</i> credibility weights that produced the forecast. When uncertainty
+        rises, the penalty grows and positions shrink &mdash; the system de-risks automatically as a crisis sets in.
+      </p>
+      <p>
+        With slack variables for |u| the problem is a linear program, solved in sub-millisecond time.
       </p>
     </div>
   </div>
 
   <div style="margin-top:30px">
     <div class="objective">
-      maximise &nbsp; &Sigma;<sub>l</sub> [ &Delta;p<sub>l</sub> &middot; u<sub>l</sub> &nbsp;&minus;&nbsp; <span class="hl">&lambda; &middot; &sigma;<sub>l</sub> &middot; |u<sub>l</sub>|</span> ]<br>
-      subject to &nbsp; &Sigma;<sub>l</sub> u<sub>l</sub> = &minus;u<sub>0</sub> ,&nbsp;&nbsp; |u<sub>l</sub>| &le; &beta; &middot; V / p<sub>l</sub>
+      max<sub>u</sub> &nbsp; &Sigma;<sub>l=1</sub><sup>L&minus;1</sup> u<sub>k+l</sub> &Delta;P&#772;<sub>k+l|k</sub> &nbsp;&minus;&nbsp; <span class="hl">&lambda; &Sigma;<sub>l=1</sub><sup>L&minus;1</sup> |u<sub>k+l</sub>| &omega;<sub>l</sub></span><br>
+      s.t. &nbsp;&nbsp;&nbsp;&nbsp; &Sigma;<sub>l</sub> u<sub>k+l</sub> = &minus;u<sub>k</sub> ,&nbsp;&nbsp; |u<sub>k+l</sub>| P<sub>k+l</sub> &le; &beta; V<sub>k</sub>
     </div>
     <ul class="gloss">
-      <li><code>&Delta;p_l</code><span>predicted price change <i>l</i> days out, from the filter</span></li>
-      <li><code>&sigma;_l</code><span>how unsure the filter is about day <i>l</i> &mdash; from the same fused model, and it grows with <i>l</i></span></li>
-      <li><code>&lambda;&middot;&sigma;_l&middot;|u_l|</code><span>a toll on every share traded, priced by the model&rsquo;s own uncertainty</span></li>
-      <li><code>&Sigma; u_l = &minus;u_0</code><span>the plan must return to flat &mdash; no runaway accumulation</span></li>
-      <li><code>&beta; = 0.5</code><span>largest single move allowed, as a fraction of that stock&rsquo;s equity</span></li>
+      <li><code>&Delta;P&#772;<sub>k+l|k</sub></code><span>predicted price change <i>l</i> days out, from the CoKF forecast</span></li>
+      <li><code>&omega;<sub>l</sub></code><span><i>l</i>-step forecast standard deviation &mdash; grows with the filter&rsquo;s uncertainty</span></li>
+      <li><code>&lambda;&middot;|u|&middot;&omega;<sub>l</sub></code><span>a toll on every share traded, priced by the model&rsquo;s own uncertainty</span></li>
+      <li><code>&Sigma; u = &minus;u<sub>k</sub></code><span>unwind the current position by the end of the horizon</span></li>
+      <li><code>&beta; = 0.5</code><span>no single trade exceeds 50% of account value</span></li>
+      <li><code>L = 7</code><span>planning horizon in trading days</span></li>
     </ul>
   </div>
 </div>
@@ -428,15 +484,39 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
 <div class="body-text">
   <h2>Results</h2>
 
-  <div class="duo">
-    <figure>
-      <img src="figures/fig_lambda_path.png" alt="Risk-return paths traced as the MPC risk weight lambda is varied.">
-      <figcaption><b>Turning the risk dial.</b> The path traced as &lambda; sweeps {0.05, 0.1, 0.3, 0.6}. Risk appetite is an explicit parameter, not an emergent property of a learned policy.</figcaption>
-    </figure>
-    <figure>
-      <img src="figures/Overall_Comparison.png" alt="Overall comparison across methods, panels and risk weights.">
-      <figcaption><b>Full sweep.</b> Every (panel, &lambda;, method) cell is reported rather than a single tuned operating point.</figcaption>
-    </figure>
+  <figure>
+    <img src="figures/Overall_Comparison.png" alt="Table II: comparison of CKF and CAST with 15 baselines on NASDAQ, CSI300, TPX100 and Global30">
+    <figcaption><b>Main results (Table II).</b> CKF and CAST against 15 baselines &mdash; Transformer, Linear/MLP,
+      financial, distribution-shift-adaptation and SOTA stock forecasters &mdash; on all four markets. FV: final value
+      from $1000; MDD: maximum drawdown (lower is better); CR, ASR, SoR: Calmar, annualized Sharpe and Sortino ratios
+      (higher is better).</figcaption>
+  </figure>
+
+  <div style="margin-top:40px">
+    <span class="sup-tag">Supplementary &middot; Table III</span>
+    <h3 style="margin-bottom:14px">Maximum drawdown during two crises</h3>
+    <div class="tbl">
+      <table>
+        <thead>
+          <tr><th></th><th colspan="4">COVID-19 crash (2020)</th><th colspan="4" class="gap">Rate-hike crisis (2022)</th></tr>
+          <tr><th>Method</th><th>NASDAQ</th><th>CSI300</th><th>TPX100</th><th>Global30</th><th class="gap">NASDAQ</th><th>CSI300</th><th>TPX100</th><th>Global30</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Market</td><td>0.340</td><td>0.159</td><td>0.250</td><td>0.258</td><td class="gap">0.252</td><td>0.172</td><td>0.150</td><td>0.336</td></tr>
+          <tr><td>BLSW</td><td>0.265</td><td>0.043</td><td>0.045</td><td>0.148</td><td class="gap u">0.061</td><td>0.071</td><td>0.039</td><td>0.066</td></tr>
+          <tr><td>CSM</td><td>0.127</td><td>0.042</td><td class="u">0.015</td><td>0.031</td><td class="gap">0.186</td><td>0.065</td><td>0.057</td><td>0.166</td></tr>
+          <tr class="grp"><td>AlphaStock</td><td class="u">0.052</td><td class="b">0.032</td><td>0.032</td><td>0.033</td><td class="gap">0.070</td><td class="u">0.059</td><td>0.036</td><td>0.064</td></tr>
+          <tr><td>MetaTrader</td><td>0.162</td><td>0.040</td><td>0.041</td><td>0.048</td><td class="gap">0.096</td><td class="b">0.057</td><td>0.067</td><td>0.076</td></tr>
+          <tr><td>FreQuant</td><td>0.186</td><td>0.045</td><td>0.030</td><td>0.094</td><td class="gap">0.116</td><td>0.063</td><td>0.067</td><td>0.090</td></tr>
+          <tr class="grp ours"><td>CKF</td><td class="b">0.045</td><td>0.057</td><td>0.055</td><td class="b">0.009</td><td class="gap b">0.026</td><td>0.086</td><td class="u">0.033</td><td class="u">0.018</td></tr>
+          <tr class="ours"><td>CAST</td><td>0.071</td><td class="u">0.035</td><td class="b">0.009</td><td class="u">0.010</td><td class="gap">0.103</td><td>0.077</td><td class="b">0.016</td><td class="b">0.017</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <figcaption><b>Crisis stress test.</b> Bold red marks the lowest (best) MDD and underline the second lowest.
+      Buy-and-hold loses 15&ndash;34% of capital across these crises; CKF or CAST posts the lowest drawdown in
+      6 of the 8 columns. Baselines: traditional strategies (Market, BLSW, CSM) and RL-based portfolio methods
+      (AlphaStock, MetaTrader, FreQuant).</figcaption>
   </div>
 
 </div>
