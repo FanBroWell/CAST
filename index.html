@@ -385,11 +385,10 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
     <div class="tl-test">2010.01 &ndash; 2025.04 &middot; out-of-sample test, never refitted</div>
   </div>
   <p class="panel-note" style="margin-top:14px">
-    <b>The window spans three market crises</b> &mdash; the 2008 subprime crisis, the 2020 COVID-19 crash
-    and the 2022 rate-hike crash. Parameters are calibrated once on pre-2010 data and held fixed for the
-    whole test window; no method sees test data during calibration or training. Each panel is one parquet
-    file of prices plus a JSON ticker list. Global30 prices are normalised to their first-day value before
-    backtesting; the other three panels use raw prices.
+    <b>The 2008 crisis sits in the calibration segment; the test window brings two different ones</b> &mdash; the
+    2020 COVID-19 liquidity shock and the 2022 rate-hike repricing. Parameters are calibrated once on pre-2010
+    data and never refitted. Each panel is one parquet file of prices plus a JSON ticker list; Global30 prices
+    are normalised to their first-day value before backtesting, the other three panels use raw prices.
   </p>
 </div>
 
@@ -403,8 +402,8 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
     <img src="figures/architecture.png" alt="CAST architecture: the CoKF predictor produces an L-step forecast and its uncertainty; the MPC controller trades only when the forecast outweighs the uncertainty">
     <figcaption><b>Overall framework.</b> The predictor (CoKF) emits an <i>L</i>-step price forecast
       P&#772;<sub>k+l|k</sub> together with its forecast uncertainty &omega;<sub>l</sub>; the controller (MPC) plans the whole
-      trade sequence, charges every trade &lambda;&middot;|u|&middot;&omega;<sub>l</sub>, and commits only u<sub>k+1</sub> before
-      re-planning at the next close. The two modules meet only at the predicted price path, so either is plug-and-play.</figcaption>
+      trade sequence, penalises every trade by &lambda;&middot;|u|&middot;&omega;<sub>l</sub>, and commits only u<sub>k+1</sub> before
+      re-planning at the next close. The two modules share nothing but this forecast&ndash;uncertainty pair, so either is plug-and-play.</figcaption>
   </figure>
 
   <div class="duo">
@@ -412,7 +411,7 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
       <h3><span class="tagline">Predictor</span>CoKF</h3>
       <p>
         Each close price is treated as a noisy reading of a hidden intrinsic value, tracked by a Kalman
-        filter. It updates recursively from the latest price &mdash; no retraining, constant cost per step &mdash;
+        filter. It updates recursively from the latest price &mdash; no retraining, constant work per step &mdash;
         and its error covariance reports how uncertain it is.
       </p>
       <p>
@@ -423,7 +422,7 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
       </p>
       <p>
         <b>Cross-asset.</b> All assets share one joint filter coupled through the process-noise covariance
-        <i>Q</i>, whose off-diagonals are &rho;<sub>ij</sub>&sigma;<sub>v</sub><sup>(i)</sup>&sigma;<sub>v</sub><sup>(j)</sup>:
+        <i>Q&#771;</i>, whose off-diagonals are &rho;<sub>ij</sub>&sigma;<sub>v</sub><sup>(i)</sup>&sigma;<sub>v</sub><sup>(j)</sup>:
         shared market shocks move the latent dynamics, not idiosyncratic measurements. With &rho;&nbsp;=&nbsp;I it
         reduces exactly to independent per-asset filters.
       </p>
@@ -431,9 +430,11 @@ a:focus-visible,.btn:focus-visible{outline:2px solid #C33A1C;outline-offset:3px}
     <div>
       <h3><span class="tagline">Controller</span>MPC</h3>
       <p>
-        One risk-isolated controller per asset. On a receding horizon of <i>L</i>&nbsp;=&nbsp;7 trading days it plans the trade sequence
-        u<sub>k+1</sub>,&nbsp;&hellip;,&nbsp;u<sub>k+L&minus;1</sub> that maximises predicted horizon profit,
-        executes only the first trade, and re-plans at the next close with fresh prices. No single trade may exceed half of the account value (&beta;&nbsp;=&nbsp;0.5).
+        One risk-isolated controller per asset. On a receding horizon of <i>L</i>&nbsp;=&nbsp;7 trading days it plans the trade
+        sequence u<sub>k+1</sub>,&nbsp;&hellip;,&nbsp;u<sub>k+L&minus;1</sub> maximising predicted horizon profit net of the
+        uncertainty penalty, under two constraints: the planned trades must sum to &minus;u<sub>k</sub> (unwinding
+        today&rsquo;s trade by the horizon end), and no single trade may exceed half the account value
+        (&beta;&nbsp;=&nbsp;0.5). Only the first trade is executed; the plan is rebuilt at the next close with fresh prices.
       </p>
       <p>
         <b>Uncertainty as risk.</b> The penalty weight &omega;<sub>l</sub> is the <i>l</i>-step forecast standard
